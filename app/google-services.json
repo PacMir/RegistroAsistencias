@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "238127248150",
+    "project_id": "registro-asistencias-43fae",
+    "storage_bucket": "registro-asistencias-43fae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238127248150:android:3ee0cbcf14318e2dd9d637",
+        "android_client_info": {
+          "package_name": "es.murciaeduca.cprregionmurcia.registroasistencias"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238127248150-q6aittps48u1171hm0u2s7rruj6ovp2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRhttWdwu7rGTDgABvUvh5Lp1HoTbGl9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238127248150-q6aittps48u1171hm0u2s7rruj6ovp2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
