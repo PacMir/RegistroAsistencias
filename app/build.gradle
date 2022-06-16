@@ -68,4 +68,12 @@ dependencies {
 
     // Corrutinas
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-lifedata-ktx:$lifecycle_version")
+    // Fragment
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    // Activity
+    implementation("androidx.activity:activity-ktx:1.4.0")
 }

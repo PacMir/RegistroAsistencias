@@ -13,9 +13,6 @@ interface UsuarioDao {
     @Update
     fun update(usuario: Usuario)
 
-    @Query("SELECT us_email FROM usuario")
-    fun getEmail(): String
-
-    @Query("SELECT us_nombre || ' ' || us_apellidos FROM usuario")
-    fun getFullName(): String
+    @Query("SELECT * FROM usuario WHERE Email = :email")
+    fun getUsuarioByEmail(email: String): Usuario
 }

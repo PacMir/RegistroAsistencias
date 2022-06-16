@@ -56,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/fb_ambar"
+                android:clickable="false"
                 android:text="Registrarse"
                 android:textColor="@color/white" />
 
@@ -69,38 +70,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:background="@color/black"
-                android:text="Acceder"
+                android:text="Iniciar sesión"
                 android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/logOutButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
-        android:text="LogOut"
-        app:layout_constraintTop_toTopOf="@+id/authLayout"
-        tools:layout_editor_absoluteX="77dp" />
+    <LinearLayout
+        android:id="@+id/initLayout"
+        android:layout_width="409dp"
+        android:layout_height="521dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/authLayout"
+        tools:layout_editor_absoluteX="1dp">
 
-    <Button
-        android:id="@+id/checkUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:text="checkuser"
-        app:layout_constraintTop_toTopOf="@+id/authLayout"
-        tools:layout_editor_absoluteX="224dp" />
-
-    <Button
-        android:id="@+id/resend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:text="resend"
-        app:layout_constraintTop_toBottomOf="@+id/checkUser"
-        tools:layout_editor_absoluteX="198dp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Por favor, inicie sesión o cree un usuario para acceder a la aplicación" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

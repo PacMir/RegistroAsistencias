@@ -18,8 +18,7 @@ class TemplateActivity : AppCompatActivity() {
 
         // Vinculación de vistas
         binding = ActivityTemplateBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         // Corrutina de entrada y salida de datos
         lifecycleScope.launch {
@@ -32,7 +31,6 @@ class TemplateActivity : AppCompatActivity() {
         /*private fun session() {
             val user = auth.currentUser
             user?.let {
-                val name = user.displayName
                 val email = user.email
                 val verified = user.isEmailVerified
 
