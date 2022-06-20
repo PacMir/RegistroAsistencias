@@ -1,6 +1,7 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias.database.entities
+package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 
 import androidx.room.*
+import java.util.*
 
 @Entity(
     tableName = "sesiones",
@@ -8,29 +9,32 @@ import androidx.room.*
         Index("ses_inicio"),
         Index("ses_fin"),
         Index("ses_carga_marca_temporal"),
-        Index("act_codigo")
+        Index("act_codigo"),
+        Index("us_email")
     ],
     foreignKeys = [
         ForeignKey(
-            entity = Actividad::class,
+            entity = ActividadEntity::class,
             parentColumns = ["act_codigo"],
             childColumns = ["act_codigo"],
-            onDelete = ForeignKey.CASCADE),
+            onDelete = ForeignKey.CASCADE
+        ),
         ForeignKey(
-            entity = Usuario::class,
+            entity = UsuarioEntity::class,
             parentColumns = ["us_email"],
             childColumns = ["us_email"],
-            onDelete = ForeignKey.CASCADE)
+            onDelete = ForeignKey.CASCADE
+        )
     ],
 )
-data class Sesion(
+data class SesionEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ses_id")
-    val id: Long,
+    val id: Long = 0,
     @ColumnInfo(name = "ses_inicio")
-    val inicio: String,
+    val inicio: Date,
     @ColumnInfo(name = "ses_fin")
-    val fin: String,
+    val fin: Date,
     @ColumnInfo(name = "ses_descarga_marca_temporal")
     val descarga_marca: String,
     @ColumnInfo(name = "ses_carga_marca_temporal")
@@ -41,9 +45,9 @@ data class Sesion(
     val actividad_codigo: String,
     @ColumnInfo(name = "us_email")
     val usuario_email: String
-){
+) {
     override fun toString(): String {
-        return "Sesion(id=$id, inicio='$inicio', fin='$fin', descarga_marca='$descarga_marca', carga_marca=$carga_marca, observaciones=$observaciones, actividad_codigo='$actividad_codigo', usuario_email='$usuario_email')\n"
+        return "SesionEntity(id=$id, inicio='$inicio', fin='$fin', descarga_marca='$descarga_marca', carga_marca=$carga_marca, observaciones=$observaciones, actividad_codigo='$actividad_codigo', usuario_email='$usuario_email')\n"
     }
 }
 

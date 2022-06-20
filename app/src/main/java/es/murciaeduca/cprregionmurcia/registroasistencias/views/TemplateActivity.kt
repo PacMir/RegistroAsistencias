@@ -1,10 +1,10 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias
+package es.murciaeduca.cprregionmurcia.registroasistencias.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import es.murciaeduca.cprregionmurcia.registroasistencias.application.App
-import es.murciaeduca.cprregionmurcia.registroasistencias.database.entities.Actividad
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.ActividadEntity
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ActivityTemplateBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,8 +22,8 @@ class TemplateActivity : AppCompatActivity() {
 
         // Corrutina de entrada y salida de datos
         lifecycleScope.launch {
-            val actividades: List<Actividad> = withContext(Dispatchers.IO) {
-                App.getDb().actividadDao().getAll()
+            val actividades: List<ActividadEntity> = withContext(Dispatchers.IO) {
+                App.getInstance().actividadDao().getAll()
             }
         }
 

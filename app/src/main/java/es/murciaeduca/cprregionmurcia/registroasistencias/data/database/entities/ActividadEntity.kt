@@ -1,21 +1,20 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias.database.entities
+package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(
     tableName = "actividades",
+    indices = [Index("mod_id")],
     foreignKeys = [
         ForeignKey(
-            entity = Modalidad::class,
+            entity = ModalidadEntity::class,
             parentColumns = ["mod_id"],
             childColumns = ["mod_id"],
-            onDelete = ForeignKey.RESTRICT)
+            onDelete = ForeignKey.RESTRICT
+        )
     ],
 )
-data class Actividad(
+data class ActividadEntity(
     @PrimaryKey
     @ColumnInfo(name = "act_codigo")
     val codigo: String,
@@ -27,8 +26,8 @@ data class Actividad(
     val responsable_email: String,
     @ColumnInfo(name = "mod_id")
     val modalidad_id: Int
-){
+) {
     override fun toString(): String {
-        return "Actividad(codigo='$codigo', titulo='$titulo', responsable='$responsable', responsable_email='$responsable_email', modalidad_id=$modalidad_id)\n"
+        return "ActividadEntity(codigo='$codigo', titulo='$titulo', responsable='$responsable', responsable_email='$responsable_email', modalidad_id=$modalidad_id)\n"
     }
 }

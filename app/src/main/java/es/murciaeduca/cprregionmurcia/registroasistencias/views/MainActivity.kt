@@ -1,7 +1,8 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias
+package es.murciaeduca.cprregionmurcia.registroasistencias.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import es.murciaeduca.cprregionmurcia.registroasistencias.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

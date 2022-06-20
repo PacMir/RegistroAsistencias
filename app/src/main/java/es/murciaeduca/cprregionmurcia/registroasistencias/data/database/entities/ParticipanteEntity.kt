@@ -1,4 +1,4 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias.database.entities
+package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 
 import androidx.room.*
 
@@ -11,16 +11,17 @@ import androidx.room.*
     ],
     foreignKeys = [
         ForeignKey(
-            entity = Actividad::class,
+            entity = ActividadEntity::class,
             parentColumns = ["act_codigo"],
             childColumns = ["act_codigo"],
-            onDelete = ForeignKey.CASCADE)
+            onDelete = ForeignKey.CASCADE
+        )
     ]
 )
-data class Participante(
+data class ParticipanteEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "part_id")
-    val id: Long,
+    val id: Long = 0,
     @ColumnInfo(name = "part_nif")
     val nif: String,
     @ColumnInfo(name = "part_apellidos")
@@ -31,8 +32,8 @@ data class Participante(
     val email: String,
     @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String
-){
+) {
     override fun toString(): String {
-        return "Participante(id=$id, nif='$nif', apellidos='$apellidos', nombre='$nombre', email='$email', actividad_codigo='$actividad_codigo')\n"
+        return "ParticipanteEntity(id=$id, nif='$nif', apellidos='$apellidos', nombre='$nombre', email='$email', actividad_codigo='$actividad_codigo')\n"
     }
 }

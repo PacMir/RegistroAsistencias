@@ -1,6 +1,5 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias
+package es.murciaeduca.cprregionmurcia.registroasistencias.views
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth

@@ -19,6 +19,33 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/userLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Apellidos"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
+
+        <EditText
             android:id="@+id/authEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,6 +67,7 @@
             android:hint="Contraseña"
             android:inputType="textPassword"
             android:minHeight="48dp" />
+
 
         <Space
             android:layout_width="match_parent"
@@ -91,6 +119,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Por favor, inicie sesión o cree un usuario para acceder a la aplicación" />
+
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

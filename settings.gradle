@@ -1,4 +1,5 @@
 pluginManagement {
+
     repositories {
         gradlePluginPortal()
         google()
@@ -12,5 +13,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Registro Asistencias"
 include ':app'
