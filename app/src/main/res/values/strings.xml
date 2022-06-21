@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Registro Asistencias</string>
+    <string name="app_name">Registro de asistencias</string>
+    <string name="app_logo_content_description">cpr_logo</string>
+    <string name="comunidad_autonoma">Región de Murcia</string>
+    <string name="auth_forgot_password"><u>¿Olvidó su contraseña?</u></string>
+    <string name="auth_register"><u>Registrarse</u></string>
+    <string name="auth_email_input">Correo electrónico</string>
+    <string name="auth_password_input">Contraseña</string>
+    <string name="auth_sign_in_button">Acceder</string>
 </resources>

@@ -1,9 +1,8 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias
+package es.murciaeduca.cprregionmurcia.registroasistencias.views
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -13,10 +12,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import es.murciaeduca.cprregionmurcia.registroasistencias.application.App
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao.UsuarioDao
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.UsuarioEntity
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ActivityAuthBinding
-import es.murciaeduca.cprregionmurcia.registroasistencias.views.HomeActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 enum class UserStatusMode {
@@ -27,32 +26,28 @@ class AuthActivity : AppCompatActivity() {
     private val auth: FirebaseAuth = Firebase.auth
     private lateinit var sp: SharedPreferences
     private lateinit var binding: ActivityAuthBinding
+    private lateinit var userDao: UsuarioDao
 
-    // Vista-Modelo usuario
-    //private lateinit var viewModel: UsuarioViewModel
-    private lateinit var userDao : UsuarioDao
 
     // Inicializar el estado del usuario como no logueado
     private var userStatus = UserStatusMode.NOT_LOGGED
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Ocultar barra
+        supportActionBar?.hide()
+
         super.onCreate(savedInstanceState)
-
-        // Viewmodel
-      /*  val repository = UsuarioRepository()
-        val vm : UsuarioViewModel by viewModels {
-            UsuarioViewModel.Factory(repository)
-        }
-        viewModel = vm*/
-        userDao = App.getInstance().usuarioDao()
-
-        // Preferencias
-        sp = getPreferences(0)
 
         // Vinculación de vistas
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // UsuarioDao
+        userDao = App.getInstance().usuarioDao()
+
+        // Preferencias
+        sp = getSharedPreferences("user", 0)
 
         // Configuración de listeners
         initSetup()
@@ -68,52 +63,89 @@ class AuthActivity : AppCompatActivity() {
 
     // Configuración de listeners
     private fun initSetup() {
-        title = "Autenticación"
         val progressBar = binding.progressBar
 
         // Evento Registro
-        binding.signUpButton.setOnClickListener {
-            if (binding.authEmail.text.isNotEmpty() && binding.authPassword.text.isNotEmpty()) {
-                progressBar.isVisible = true
-                createAccount()
-            }
+        binding.registerLink.setOnClickListener {
+
         }
+        /*   binding.logInButton.setOnClickListener {
+               if (binding.authEmail.text.isNotEmpty() && binding.authPassword.text.isNotEmpty()) {
+                   progressBar.isVisible = true
+                   createAccount()
+               }
+           }*/
 
         // Evento Inicio sesión
-        binding.loginButton.setOnClickListener {
-            if (binding.authEmail.text.isNotEmpty() && binding.authPassword.text.isNotEmpty()) {
+        binding.logInButton.setOnClickListener {
+            if (!checkEmailField() || !checkPasswordField())
+                return@setOnClickListener
+
+
+            /*if (binding.authEmail.text.isNotEmpty() && binding.authPassword.text.isNotEmpty()) {
                 progressBar.isVisible = true
                 logIn()
-            }
+            }*/
         }
+    }
+
+    // Comprobar email
+    private fun checkEmailField(): Boolean {
+        val email = binding.authEmail.text.trim()
+
+        if (email.isEmpty()) {
+            binding.authEmail.error = "Este campo es necesario"
+            binding.authEmail.requestFocus()
+
+            return false
+        }
+        return true
+    }
+
+    // Comprobar contraseña
+    private fun checkPasswordField(): Boolean {
+        val password = binding.authPassword.text.trim()
+
+        if (password.isEmpty()) {
+            binding.authPassword.error = "Este campo es necesario"
+            binding.authPassword.requestFocus()
+
+            return false
+        }
+
+        if (password.length < 8) {
+            binding.authPassword.error = "La contraseña debe contener, al menos, 8 caracteres"
+            binding.authPassword.requestFocus()
+
+            return false
+        }
+
+        return true
     }
 
     // Actualizar la variable userStatus con el estado del usuario
     private fun getUserStatus() {
         val user = auth.currentUser
-        if (user == null) {
-            userStatus = UserStatusMode.NOT_LOGGED
+        userStatus = if (user == null) {
+            UserStatusMode.NOT_LOGGED
 
         } else {
             user.reload()
 
             // Establecer en preferencias el nombre del usuario actual
-            //val userName = viewModel.getLongName(user.email!!)
             lifecycleScope.launch {
-                val userName = userDao.getLongName(user.email!!)
-                sp.edit().putString("userName", userName)
-                sp.edit().apply()
+                val userName = withContext(Dispatchers.IO) { userDao.getLongName(user.email!!) }
+                setSessionPreferences(userName, user.email!!)
             }
 
-            userStatus =
-                if (user.isEmailVerified) UserStatusMode.VERIFIED else UserStatusMode.NOT_VERIFIED
+            if (user.isEmailVerified) UserStatusMode.VERIFIED else UserStatusMode.NOT_VERIFIED
         }
     }
 
     // Crear nueva cuenta
     private fun createAccount() {
-        val name = binding.userName.text.toString()
-        val lastName = binding.userLastName.text.toString()
+        //val name = binding.userName.text.toString()
+        //val lastName = binding.userLastName.text.toString()
         val email = binding.authEmail.text.toString()
         val password = binding.authPassword.text.toString()
 
@@ -121,12 +153,11 @@ class AuthActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     // Crear usuario
-                    //viewModel.save(UsuarioEntity(email, name, lastName))
-                    lifecycleScope.launch {
-                        userDao.save(UsuarioEntity(email, name, lastName))
-                    }
-                    sp.edit().putString("userName", "$name $lastName")
-                    sp.edit().apply()
+                    /*lifecycleScope.launch {
+                        withContext(Dispatchers.IO){
+                            userDao.save(UsuarioEntity(email, name, lastName))
+                        }
+                    }*/
 
                     // Enviar correo de verificación
                     sendEmailVerification()
@@ -145,7 +176,6 @@ class AuthActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    showAlert(sp.getString("userName", "").toString())
                     updateUI()
                 } else {
                     showAlert("Ha fallado la autenticación")
@@ -154,7 +184,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     // Enviar/reenviar email de verificación
-    private fun sendEmailVerification() =
+    private fun sendEmailVerification() {
         // Comprobar que han pasado más de 10 minutos desde el último correo
         if (userStatus == UserStatusMode.NOT_VERIFIED && getMinutesAfterEmailSent() < 10) {
             showAlert("Por favor, espere $MIN_MINUTES minutos para volver a solicitar otro correo de confirmación.")
@@ -181,6 +211,7 @@ class AuthActivity : AppCompatActivity() {
             // Actualizar la vista
             updateUI()
         }
+    }
 
     // Calcular el tiempo que ha pasado desde que se envió el email
     private fun getMinutesAfterEmailSent(): Long {
@@ -196,7 +227,7 @@ class AuthActivity : AppCompatActivity() {
         // UsuarioEntity activo y email verificado, ocultar campos y redirección a Home
         when (userStatus) {
             UserStatusMode.VERIFIED -> {
-                binding.authLayout.visibility = View.INVISIBLE
+                //  binding.authLayout.visibility = View.INVISIBLE
                 goHome()
             }
             // UsuarioEntity activo y email no verificado, mostrar texto de espera de verificación y enlace de envío de correo (esperar 10min para que este esté activo)
@@ -206,7 +237,7 @@ class AuthActivity : AppCompatActivity() {
                 // UsuarioEntity no autenticado
             }
             else -> {
-                binding.authLayout.visibility = View.VISIBLE
+                //  binding.authLayout.visibility = View.VISIBLE
             }
         }
     }
@@ -225,7 +256,16 @@ class AuthActivity : AppCompatActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
     }
 
-    companion object {
+    // Guardar datos del usuario en preferencias
+    private fun setSessionPreferences(name: String, email: String) {
+        with(sp.edit()) {
+            putString("userName", name)
+            putString("userEmail", email)
+            apply()
+        }
+    }
+
+    private companion object {
         // Número mínimo en minutos que deben pasar para reenviar un correo de verificación de usuario
         private const val MIN_MINUTES = 10
     }

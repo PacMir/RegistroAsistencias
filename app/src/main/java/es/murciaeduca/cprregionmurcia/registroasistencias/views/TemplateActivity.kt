@@ -27,6 +27,20 @@ class TemplateActivity : AppCompatActivity() {
             }
         }
 
+        /*
+
+         // Viewmodel
+        val repository = TemplateRepository()
+        val vm : UsuarioViewModel by viewModels {
+            UsuarioViewModel.Factory(repository)
+        }
+        viewModel = vm
+
+        //val userName = viewModel.getLongName(user.email!!)
+
+
+         */
+
         // Recupera los datos del usuario de SharedPreferences y oculta el layout de autenticación si existen
         /*private fun session() {
             val user = auth.currentUser

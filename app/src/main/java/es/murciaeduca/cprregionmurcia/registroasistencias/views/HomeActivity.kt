@@ -1,5 +1,6 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.views
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
@@ -8,52 +9,37 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ActivityHo
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var sp: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Preferencias
+        sp = getSharedPreferences("user",0)
+
         // Vinculación de vistas
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        // Recuperar los datos del la actividad de autenticación
-        val bundle = intent.extras
-        val email = bundle?.getString("email")
-        setup(email ?: "")
-
-        // Guardado de datos del usuario
-        /*val user_session = getSharedPreferences(getString(R.string.user_session), Context.MODE_PRIVATE).edit()
-        user_session.putString("email", email)
-        user_session.apply()*/
+        initSetup()
     }
 
     // Mostrar datos del usuario
-    private fun setup(email: String) {
+    private fun initSetup() {
         title = "Inicio"
-        binding.emailView.text = email
-        binding.userView.text = "Éxito"
+        binding.emailView.text = sp.getString("userEmail", "asdf")
+        binding.userView.text = sp.getString("userName", "")
 
         // Evento logout
         binding.logOutButton.setOnClickListener() {
             // Borrar datos de sesión
-            /*val user_session = getSharedPreferences(getString(R.string.user_session), Context.MODE_PRIVATE).edit()
-            user_session.clear()
-            user_session.apply()*/
+            with(sp.edit()) {
+                clear()
+                apply()
+            }
 
             Firebase.auth.signOut()
             onBackPressed()
         }
-    }
-
-    private fun checkCurrentUser() {
-        // [START check_current_user]
-        val user = Firebase.auth.currentUser
-        if (user != null) {
-            // User is signed in
-        } else {
-            // No user is signed in
-        }
-        // [END check_current_user]
     }
 }

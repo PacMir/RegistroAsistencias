@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="fb_gris">#ECEFF1</color>
-    <color name="fb_ambar">#FFA000</color>
+
+    <color name="bg_grey">#ECEFF1</color>
+    <color name="bg_blue">#577bbd</color>
+    <color name="dark_grey">#676767</color>
 </resources>

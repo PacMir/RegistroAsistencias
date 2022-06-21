@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [UsuarioEntity::class, SesionEntity::class, ActividadEntity::class, ModalidadEntity::class, ParticipanteEntity::class, AsistenciaEntity::class],
+    exportSchema = false,
     version = 1
 )
 @TypeConverters(DateConverter::class)
@@ -33,12 +34,15 @@ abstract class AppDatabase : RoomDatabase() {
         // Singleton de instancia de conexión a la base de datos
         fun getInstance(context: Context): AppDatabase {
 
+            // Eliminar base de datos
+            //context.deleteDatabase(DATABASE_NAME);
+
             // Crear instancia database si no es null
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "database"
+                    DATABASE_NAME
                 )
                     .fallbackToDestructiveMigration()
                    // .addCallback(ModalidadesPopulator())
@@ -78,5 +82,8 @@ abstract class AppDatabase : RoomDatabase() {
             ModalidadEntity(8, "Proyecto de innovación"),
             ModalidadEntity(9, "Proyecto de investigación")
         )
+
+        // Nombre de la base de datos
+        private val DATABASE_NAME = "database"
     }
 }
