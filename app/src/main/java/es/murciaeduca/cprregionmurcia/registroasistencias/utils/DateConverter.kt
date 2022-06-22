@@ -1,4 +1,4 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias.util
+package es.murciaeduca.cprregionmurcia.registroasistencias.utils
 
 import androidx.room.TypeConverter
 import java.util.*

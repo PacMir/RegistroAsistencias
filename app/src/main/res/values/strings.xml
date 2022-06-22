@@ -1,10 +1,17 @@
 <resources>
     <string name="app_name">Registro de asistencias</string>
     <string name="app_logo_content_description">cpr_logo</string>
+
+    <!-- Login -->
     <string name="comunidad_autonoma">Región de Murcia</string>
     <string name="auth_forgot_password"><u>¿Olvidó su contraseña?</u></string>
-    <string name="auth_register"><u>Registrarse</u></string>
-    <string name="auth_email_input">Correo electrónico</string>
-    <string name="auth_password_input">Contraseña</string>
-    <string name="auth_sign_in_button">Acceder</string>
+    <string name="auth_sign_in_link"><u>Registrarse</u></string>
+    <string name="auth_email">Correo electrónico</string>
+    <string name="auth_password">Contraseña</string>
+    <string name="auth_name">Nombre</string>
+    <string name="auth_lastname">Apellidos</string>
+    <string name="auth_log_in_button">Acceder</string>
+    <string name="auth_sign_in_button">Crear cuenta</string>
+    <string name="auth_error_empty">Este campo es necesario</string>
+    <string name="auth_error_password">"La contraseña debe contener, al menos, 8 caracteres"</string>
 </resources>

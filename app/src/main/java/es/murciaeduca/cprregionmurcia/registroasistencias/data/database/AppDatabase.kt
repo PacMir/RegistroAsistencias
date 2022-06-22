@@ -5,12 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao.*
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.*
-import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateConverter
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import es.murciaeduca.cprregionmurcia.registroasistencias.utils.DateConverter
 
 @Database(
     entities = [UsuarioEntity::class, SesionEntity::class, ActividadEntity::class, ModalidadEntity::class, ParticipanteEntity::class, AsistenciaEntity::class],

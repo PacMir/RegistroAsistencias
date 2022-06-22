@@ -27,4 +27,5 @@ ext {
     lifecycleVersion = '2.4.1'
     roomVersion = '2.4.2'
     coroutineVersion = '1.6.2'
+    navigationVersion = '2.4.2'
 }
