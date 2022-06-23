@@ -12,6 +12,10 @@
     <string name="auth_lastname">Apellidos</string>
     <string name="auth_log_in_button">Acceder</string>
     <string name="auth_sign_in_button">Crear cuenta</string>
-    <string name="auth_error_empty">Este campo es necesario</string>
-    <string name="auth_error_password">"La contraseña debe contener, al menos, 8 caracteres"</string>
+    <string name="auth_error_empty">Cumplimente todos los campos</string>
+    <string name="auth_error_password">La contraseña debe contener, al menos, 8 caracteres</string>
+    <string name="auth_error_login">Usuario y/o contraseña no válidos</string>
+    <string name="auth_error_registry">No se ha podido registrar el usuario</string>
+    <string name="auth_error_connection">No hay conexión a Internet</string>
+    <string name="auth_email_verification">La cuenta está pendiente de verificación. Por favor, consulte su correo y hágalo con el link proporcionado</string>
 </resources>

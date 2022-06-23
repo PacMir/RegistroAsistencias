@@ -3,6 +3,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -80,4 +81,7 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+    // Material
+    implementation "com.google.android.material:material:$materialVersion"
 }

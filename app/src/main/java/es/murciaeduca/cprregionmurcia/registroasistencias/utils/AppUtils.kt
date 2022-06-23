@@ -4,15 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.appcompat.app.AlertDialog
 
-enum class UserStatusMode {
-    NOT_LOGGED, NOT_VERIFIED, VERIFIED
-}
+object AppUtils {
 
-class AppUtils {
-
-    // Comprobar conexión
+    // Comprobar conexión a Internet
     fun checkNetwork(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -34,14 +29,4 @@ class AppUtils {
             return networkInfo.isConnected
         }
     }
-
-    // Mostrar alertas
-    fun showAlert(context: Context, message: String) {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Atención")
-        builder.setMessage(message)
-        builder.setPositiveButton("Cerrar", null)
-        builder.show()
-    }
-
 }

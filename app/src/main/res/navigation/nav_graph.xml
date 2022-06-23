@@ -6,24 +6,24 @@
     app:startDestination="@id/authLoginFragment">
     <fragment
         android:id="@+id/authLoginFragment"
-        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.views.AuthLoginFragment"
+        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.auth.AuthLoginFragment"
         android:label="fragment_auth_login"
         tools:layout="@layout/fragment_auth_login">
         <action
             android:id="@+id/action_authLoginFragment_to_authRegisterFragment"
             app:destination="@id/authRegisterFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/authRegisterFragment"
-        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.views.AuthRegisterFragment"
+        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.auth.AuthRegisterFragment"
         android:label="AuthRegisterFragment"
         tools:layout="@layout/fragment_auth_register">
         <action
             android:id="@+id/action_authRegisterFragment_to_authLoginFragment"
             app:destination="@id/authLoginFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 </navigation>
