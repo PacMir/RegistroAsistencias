@@ -11,6 +11,9 @@ interface UsuarioDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun save(usuario: UsuarioEntity)
 
+    @Query("SELECT COUNT(*) FROM usuarios WHERE us_email = :email")
+    suspend fun userExists(email: String): Int
+
     @Query("SELECT us_nombre || ' ' || us_apellidos FROM usuarios WHERE us_email = :email LIMIT 1")
     suspend fun getLongName(email: String): String
 }

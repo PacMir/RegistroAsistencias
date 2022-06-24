@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -28,9 +28,13 @@ import kotlinx.coroutines.withContext
  */
 class AuthRegisterFragment : Fragment() {
     private val userDao = App.getInstance().usuarioDao()
-    private val viewModel: AuthViewModel by activityViewModels()
     private val auth: FirebaseAuth = Firebase.auth
     private lateinit var navController: NavController
+
+    private lateinit var name: String
+    private lateinit var lastName: String
+    private lateinit var email: String
+    private lateinit var password: String
 
     private var _binding: FragmentAuthRegisterBinding? = null
     private val binding get() = _binding!!
@@ -51,7 +55,7 @@ class AuthRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        clickListeners(view)
+        clickListeners()
     }
 
     override fun onDestroyView() {
@@ -60,100 +64,130 @@ class AuthRegisterFragment : Fragment() {
     }
 
     // Listeners
-    private fun clickListeners(view: View) {
+    private fun clickListeners() {
         // Evento registro
         binding.signInButton.setOnClickListener {
+
             // Comprobar conexión
             if (!AppUtils.checkNetwork(requireContext())) {
-                Snackbar.make(view, R.string.auth_error_connection, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), R.string.auth_error_connection, Snackbar.LENGTH_LONG)
+                    .show()
                 return@setOnClickListener
             }
 
-            if (binding.authEmail.text.isNotEmpty() && binding.authPassword.text.isNotEmpty()) {
-                createAccount(view)
+            name = binding.authName.text.trim().toString()
+            lastName = binding.authLastName.text.trim().toString()
+            email = binding.authEmail.text.trim().toString()
+            password = binding.authPassword.text.trim().toString()
+
+            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                Snackbar.make(requireView(), R.string.auth_error_empty, Snackbar.LENGTH_SHORT)
+                    .show()
+
+            } else {
+
+                // Comprobar si existe el usuario
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        if (userDao.userExists(email) > 0) {
+                            Snackbar.make(
+                                requireView(),
+                                R.string.auth_account_exists,
+                                Snackbar.LENGTH_LONG
+                            )
+                                .show()
+
+                        } else {
+                            createAccount()
+                        }
+                    }
+                }
             }
         }
     }
 
     // Crear nueva cuenta
-    private fun createAccount(view: View) {
-        val name = binding.authName.text.toString()
-        val lastName = binding.authLastName.text.toString()
-        val email = binding.authEmail.text.toString()
-        val password = binding.authPassword.text.toString()
+    private fun createAccount() {
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    // Crear usuario en la base de datos
-                    try {
+        // Comprobar contraseña
+        if (checkPasswordField()) {
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+
+                        // Crear usuario en la base de datos
                         lifecycleScope.launch {
                             withContext(Dispatchers.IO) {
-                                userDao.save(UsuarioEntity(email, name, lastName))
+
+                                try {
+                                    userDao.save(UsuarioEntity(email, name, lastName))
+
+                                    // Enviar correo de verificación
+                                    sendEmailVerification()
+
+                                    // Borrar usuario de firebase en caso de error
+                                } catch (e: Exception) {
+                                    Snackbar.make(
+                                        requireView(),
+                                        R.string.auth_error_registry,
+                                        Snackbar.LENGTH_LONG
+                                    )
+                                        .show()
+                                    auth.currentUser!!.delete()
+                                }
                             }
                         }
 
-                        // Enviar correo de verificación
-                        sendEmailVerification(view, email)
-
-                        // Borrar usuario de firebase en caso de error
-                    } catch (e: Exception) {
-                        Snackbar.make(view, R.string.auth_error_registry, Snackbar.LENGTH_LONG)
+                    } else {
+                        Snackbar.make(
+                            requireView(),
+                            R.string.auth_error_registry,
+                            Snackbar.LENGTH_LONG
+                        )
                             .show()
-                        auth.currentUser?.delete()
                     }
-
-                } else {
-                    Snackbar.make(view, R.string.auth_error_registry, Snackbar.LENGTH_LONG).show()
                 }
-            }
+        }
     }
 
     // Enviar email de verificación
-    private fun sendEmailVerification(view: View, email: String) {
+    private fun sendEmailVerification() {
         val user = auth.currentUser!!
 
         user.sendEmailVerification()
             .addOnCompleteListener {
-                // Mostrar mensaje de validación
+                // Mostrar mensaje de validación y redirección a login
                 if (it.isSuccessful) {
-                    viewModel.goVerify(requireContext(), navController, email)
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(context?.resources?.getString(R.string.auth_verify_title) + " " + email)
+                        .setMessage(R.string.auth_verify)
+                        .setPositiveButton(R.string.accept) { _, _ ->
+                            val direction =
+                                AuthRegisterFragmentDirections.actionAuthRegisterFragmentToAuthLoginFragment()
+                            navController.navigate(direction)
+                        }
+                        .show()
                 }
             }
             .addOnFailureListener {
                 // Borrar usuario
                 user.delete()
-                Snackbar.make(view, R.string.auth_error_registry, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), R.string.auth_error_registry, Snackbar.LENGTH_LONG)
+                    .show()
             }
-
-    }
-
-/*
-// Comprobar email
-    private fun checkEmptyFields(str: String): Boolean {
-        if (str.isEmpty()) {
-            Toast.makeText(requireContext(), R.string.auth_error_empty, Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        return true
     }
 
     // Comprobar contraseña
     private fun checkPasswordField(): Boolean {
-        if (!checkEmptyFields(password)) {
-            return false
-        }
-
         if (password.length < 8) {
-            Toast.makeText(requireContext(), R.string.auth_error_password, Toast.LENGTH_SHORT)
+            Snackbar.make(requireView(), R.string.auth_error_password, Snackbar.LENGTH_SHORT)
                 .show()
             return false
         }
 
         return true
     }
-    */
 }
 
 

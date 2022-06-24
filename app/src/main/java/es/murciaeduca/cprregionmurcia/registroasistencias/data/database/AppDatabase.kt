@@ -16,12 +16,12 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.utils.DateConverter
 )
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun usuarioDao() : UsuarioDao
-    abstract fun sesionDao() : SesionDao
-    abstract fun actividadDao() : ActividadDao
-    abstract fun modalidadesDao() : ModalidadDao
-    abstract fun participanteDao() : ParticipanteDao
-    abstract fun asistenciaDao() : AsistenciaDao
+    abstract fun usuarioDao(): UsuarioDao
+    abstract fun sesionDao(): SesionDao
+    abstract fun actividadDao(): ActividadDao
+    abstract fun modalidadesDao(): ModalidadDao
+    abstract fun participanteDao(): ParticipanteDao
+    abstract fun asistenciaDao(): AsistenciaDao
 
     companion object {
 
@@ -42,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
                     DATABASE_NAME
                 )
                     .fallbackToDestructiveMigration()
-                   // .addCallback(ModalidadesPopulator())
+                    // .addCallback(ModalidadesPopulator())
                     .build()
                 INSTANCE = instance
 

@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -24,7 +24,6 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.utils.hideKeyboard
  * Autenticación: Login
  */
 class AuthLoginFragment : Fragment() {
-    private val viewModel: AuthViewModel by activityViewModels()
     private val auth: FirebaseAuth = Firebase.auth
     private lateinit var navController: NavController
 
@@ -48,7 +47,7 @@ class AuthLoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        clickListeners(view)
+        clickListeners()
     }
 
     override fun onDestroyView() {
@@ -57,18 +56,19 @@ class AuthLoginFragment : Fragment() {
     }
 
     // Listeners
-    private fun clickListeners(view: View) {
+    private fun clickListeners() {
+
         // Evento login
         binding.logInButton.setOnClickListener {
             hideKeyboard()
 
             // Comprobar conexión
             if (!AppUtils.checkNetwork(requireContext())) {
-                Snackbar.make(view, R.string.auth_error_connection, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), R.string.auth_error_connection, Snackbar.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            logIn(view)
+            logIn()
         }
 
         // Ir a fragment de registro
@@ -80,32 +80,44 @@ class AuthLoginFragment : Fragment() {
     }
 
     // Iniciar sesión
-    private fun logIn(view: View) {
+    private fun logIn() {
+        val email = binding.authEmail.text.trim().toString()
+        val password = binding.authPassword.text.trim().toString()
 
-        // El usuario está logueado y pendiente de verificación mostrar alerta
-        if (viewModel.getUserStatus(auth) == UserStatusMode.NOT_VERIFIED) {
-            viewModel.notVerified(requireContext())
+        // Campos vacíos
+        if (email.isEmpty() || password.isEmpty()) {
+            Snackbar.make(requireView(), R.string.auth_error_empty, Snackbar.LENGTH_SHORT).show()
 
             // Intentar autenticación con Firebase
         } else {
-            val email = binding.authEmail.text.trim().toString()
-            val password = binding.authPassword.text.trim().toString()
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Snackbar.make(view, R.string.auth_error_empty, Snackbar.LENGTH_SHORT).show()
-
-            } else {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            startActivity(Intent(activity, HomeActivity::class.java))
-
-                        } else {
-                            Snackbar.make(view, R.string.auth_error_login, Snackbar.LENGTH_SHORT)
+                        // Usuario pendiente de verificación
+                        if (!auth.currentUser!!.isEmailVerified) {
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(R.string.auth_email_verification_title)
+                                .setMessage(R.string.auth_email_verification)
+                                // TODO
+                                //.setNeutralButton(R.string.auth_resend_email, null)
+                                .setPositiveButton(R.string.accept, null)
                                 .show()
+
+                            // Nueva autenticación
+                            auth.signOut()
+
+                            // Usuario verificado, redirección a Home
+                        } else {
+                            startActivity(Intent(activity, HomeActivity::class.java))
+                            activity?.finish()
                         }
+
+                    } else {
+                        Snackbar.make(requireView(), R.string.auth_error_login, Snackbar.LENGTH_SHORT)
+                            .show()
                     }
-            }
+                }
         }
     }
 }

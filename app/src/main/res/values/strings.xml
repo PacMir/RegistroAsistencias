@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Registro de asistencias</string>
     <string name="app_logo_content_description">cpr_logo</string>
+    <string name="accept">Aceptar</string>
 
     <!-- Login -->
     <string name="comunidad_autonoma">Región de Murcia</string>
     <string name="auth_forgot_password"><u>¿Olvidó su contraseña?</u></string>
-    <string name="auth_sign_in_link"><u>Registrarse</u></string>
+    <string name="auth_sign_in_link"><u>Crear cuenta</u></string>
     <string name="auth_email">Correo electrónico</string>
     <string name="auth_password">Contraseña</string>
     <string name="auth_name">Nombre</string>
@@ -16,6 +17,11 @@
     <string name="auth_error_password">La contraseña debe contener, al menos, 8 caracteres</string>
     <string name="auth_error_login">Usuario y/o contraseña no válidos</string>
     <string name="auth_error_registry">No se ha podido registrar el usuario</string>
+    <string name="auth_resend_email">Reenviar correo</string>
+    <string name="auth_account_exists">Ya existe una cuenta asociada a esta dirección de email</string>
+    <string name="auth_verify_title">Se ha enviado un correo a</string>
+    <string name="auth_verify">Por favor, haga clic en el enlace proporcionado en el mismo para verificar su cuenta.</string>
     <string name="auth_error_connection">No hay conexión a Internet</string>
-    <string name="auth_email_verification">La cuenta está pendiente de verificación. Por favor, consulte su correo y hágalo con el link proporcionado</string>
+    <string name="auth_email_verification_title">La cuenta está pendiente de verificación</string>
+    <string name="auth_email_verification">Por favor, consulte su correo y verifique su cuenta con el link proporcionado.</string>
 </resources>
