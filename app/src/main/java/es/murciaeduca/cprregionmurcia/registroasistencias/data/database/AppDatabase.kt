@@ -68,7 +68,7 @@ abstract class AppDatabase : RoomDatabase() {
                     }
                 }
             }
-        }*/
+        }
 
         // Datos iniciales de modalidades
         private val PREP_MODS = listOf(
@@ -82,6 +82,7 @@ abstract class AppDatabase : RoomDatabase() {
             ModalidadEntity("PIE", "Proyecto de innovación"),
             ModalidadEntity("PIV", "Proyecto de investigación")
         )
+         */
 
         // Nombre de la base de datos
         private const val DATABASE_NAME = "database"

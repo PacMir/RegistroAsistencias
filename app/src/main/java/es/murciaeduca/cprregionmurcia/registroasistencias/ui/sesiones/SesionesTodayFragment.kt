@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentSesionesTodayBinding
+import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.SesionViewModel
 
 class SesionesTodayFragment : Fragment() {
     private var _binding: FragmentSesionesTodayBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SesionViewModel by viewModels()
 
     // Informar al sistema que el fragmento de la barra de la app participa en la propagación del menú de opciones
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,12 +37,7 @@ class SesionesTodayFragment : Fragment() {
 
     // Listeners
     private fun clickListeners() {
-        // Click en sesión
-        binding.showPart.setOnClickListener {
-            val direction =
-                SesionesTodayFragmentDirections.actionSesionesTodayFragmentToAsistenciaFragment()
-            findNavController().navigate(direction)
-        }
+
     }
 
     // Toolbar

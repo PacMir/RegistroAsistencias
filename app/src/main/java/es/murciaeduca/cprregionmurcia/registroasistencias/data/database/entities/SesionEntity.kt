@@ -31,8 +31,7 @@ data class SesionEntity(
     @ColumnInfo(name = "ses_carga_marca_temporal")
     val carga_marca_temporal: Date?,
     @ColumnInfo(name = "ses_observaciones")
-    val observaciones: String?
-
+    val observaciones: String?,
 ) {
     override fun toString(): String {
         return "SesionEntity(actividad_codigo='$actividad_codigo', inicio=$inicio, fin=$fin, carga_marca_temporal=$carga_marca_temporal, observaciones=$observaciones)"

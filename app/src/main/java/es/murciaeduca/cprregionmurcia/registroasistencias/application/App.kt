@@ -6,7 +6,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.AppDatab
 class App : Application() {
     companion object {
         private var db: AppDatabase? = null
-        public fun getInstance(): AppDatabase {
+        fun getInstance(): AppDatabase {
             return db!!
         }
     }
