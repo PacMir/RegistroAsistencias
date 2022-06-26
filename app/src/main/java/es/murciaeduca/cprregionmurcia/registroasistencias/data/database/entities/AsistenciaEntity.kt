@@ -4,37 +4,50 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import java.util.*
 
 @Entity(
     tableName = "asistencias",
-    primaryKeys = ["part_id", "ses_id"],
-    indices = [Index("ses_id")],
+    primaryKeys = ["act_codigo", "ses_inicio", "part_nif"],
+    indices = [
+        Index("act_codigo"),
+        Index("ses_inicio"),
+        Index("part_nif")
+    ],
     foreignKeys = [
         ForeignKey(
-            entity = ParticipanteEntity::class,
-            parentColumns = ["part_id"],
-            childColumns = ["part_id"],
+            entity = ActividadEntity::class,
+            parentColumns = ["act_codigo"],
+            childColumns = ["act_codigo"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = SesionEntity::class,
-            parentColumns = ["ses_id"],
-            childColumns = ["ses_id"],
+            parentColumns = ["act_codigo", "ses_inicio"],
+            childColumns = ["act_codigo", "ses_inicio"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = ParticipanteEntity::class,
+            parentColumns = ["act_codigo", "part_nif"],
+            childColumns = ["act_codigo", "part_nif"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class AsistenciaEntity(
-    @ColumnInfo(name = "part_id")
-    val participante_id: Long,
-    @ColumnInfo(name = "ses_id")
-    val sesion_id: Long,
+    @ColumnInfo(name = "act_codigo")
+    val actividad_codigo: String,
+    @ColumnInfo(name = "ses_inicio")
+    val sesion_inicio: Date,
+    @ColumnInfo(name = "part_nif")
+    val participante_nif: String,
     @ColumnInfo(name = "factor")
     val factor: Float,
     @ColumnInfo(name = "marca_temporal")
-    val marca: String
+    val marca_temporal: Date,
 ) {
     override fun toString(): String {
-        return "AsistenciaEntity(participante_id=$participante_id, sesion_id=$sesion_id, factor=$factor, marca='$marca')\n"
+        return "AsistenciaEntity(actividad_codigo='$actividad_codigo', sesion_inicio=$sesion_inicio, participante_nif='$participante_nif', factor=$factor, marca_temporal='$marca_temporal')"
     }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/toolbarDownload"
+        android:icon="@drawable/ic_cloud_download"
+        android:title="@string/toolbar_download"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <group
+        android:id="@+id/toolbarPasadas"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/toolbarUpload"
+            android:icon="@drawable/ic_cloud_upload"
+            android:title="@string/toolbar_upload"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/toolbarSearch"
+            android:icon="@drawable/ic_person_search"
+            android:title="@string/toolbar_search"
+            app:showAsAction="always" />
+    </group>
+    <item
+        android:id="@+id/toolbarDropdown"
+        android:icon="@drawable/ic_more_vert_white"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menuHelp"
+                android:icon="@drawable/ic_help"
+                android:orderInCategory="100"
+                android:title="@string/toolbar_of_help" />
+            <item
+                android:id="@+id/menuSettings"
+                android:icon="@drawable/ic_settings"
+                android:orderInCategory="200"
+                android:title="@string/toolbar_of_settings" />
+            <item
+                android:id="@+id/menuLogOut"
+                android:icon="@drawable/ic_exit"
+                android:orderInCategory="300"
+                android:title="@string/toolbar_of_logout" />
+        </menu>
+    </item>
+</menu>

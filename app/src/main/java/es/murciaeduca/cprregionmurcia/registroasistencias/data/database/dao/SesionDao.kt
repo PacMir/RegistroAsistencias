@@ -7,7 +7,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 @Dao
 interface SesionDao {
     @Query("SELECT * FROM sesiones")
-    fun getAll(): LiveData<List<SesionEntity>>
+    fun getAll(): LiveData<List<SesionEntity>>?
 
     @Insert
     fun save(sesion: SesionEntity)

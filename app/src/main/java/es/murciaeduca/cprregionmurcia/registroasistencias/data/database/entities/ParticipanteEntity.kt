@@ -4,10 +4,11 @@ import androidx.room.*
 
 @Entity(
     tableName = "participantes",
+    primaryKeys = ["act_codigo", "part_nif"],
     indices = [
-        Index(value = ["part_nif", "act_codigo"], unique = true),
-        Index("part_nombre", "part_apellidos"),
-        Index("act_codigo")
+        Index(name="index_participantes_nombre_largo", value = ["part_nombre", "part_apellidos"]),
+        Index("act_codigo"),
+        Index("part_nif")
     ],
     foreignKeys = [
         ForeignKey(
@@ -19,21 +20,18 @@ import androidx.room.*
     ]
 )
 data class ParticipanteEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "part_id")
-    val id: Long = 0,
+    @ColumnInfo(name = "act_codigo")
+    val actividad_codigo: String,
     @ColumnInfo(name = "part_nif")
     val nif: String,
-    @ColumnInfo(name = "part_apellidos")
-    val apellidos: String,
     @ColumnInfo(name = "part_nombre")
     val nombre: String,
+    @ColumnInfo(name = "part_apellidos")
+    val apellidos: String,
     @ColumnInfo(name = "part_email")
-    val email: String,
-    @ColumnInfo(name = "act_codigo")
-    val actividad_codigo: String
+    val email: String
 ) {
     override fun toString(): String {
-        return "ParticipanteEntity(id=$id, nif='$nif', apellidos='$apellidos', nombre='$nombre', email='$email', actividad_codigo='$actividad_codigo')\n"
+        return "ParticipanteEntity(actividad_codigo='$actividad_codigo', nif='$nif', nombre='$nombre', apellidos='$apellidos', email='$email')"
     }
 }

@@ -1,31 +1,25 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import es.murciaeduca.cprregionmurcia.registroasistencias.HomeActivity
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentAuthLoginBinding
-import es.murciaeduca.cprregionmurcia.registroasistencias.utils.AppUtils
-import es.murciaeduca.cprregionmurcia.registroasistencias.utils.hideKeyboard
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.hideKeyboard
 
-/**
- * Fragmento
- * Autenticación: Login
- */
 class AuthLoginFragment : Fragment() {
     private val auth: FirebaseAuth = Firebase.auth
-    private lateinit var navController: NavController
+
+    private lateinit var email: String
+    private lateinit var password: String
 
     private var _binding: FragmentAuthLoginBinding? = null
     private val binding get() = _binding!!
@@ -35,9 +29,6 @@ class AuthLoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
-        navController = findNavController()
-
         // Vinculación de vistas
         _binding = FragmentAuthLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -46,7 +37,6 @@ class AuthLoginFragment : Fragment() {
     // Establecer listeners
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         clickListeners()
     }
 
@@ -60,64 +50,81 @@ class AuthLoginFragment : Fragment() {
 
         // Evento login
         binding.logInButton.setOnClickListener {
-            hideKeyboard()
-
-            // Comprobar conexión
-            if (!AppUtils.checkNetwork(requireContext())) {
-                Snackbar.make(requireView(), R.string.auth_error_connection, Snackbar.LENGTH_LONG).show()
-                return@setOnClickListener
+            // Comprobar campos
+            if (!isEmptyFields(it)) {
+                logIn(it)
             }
-
-            logIn()
         }
 
-        // Ir a fragment de registro
+        // Evento ir a registro
         binding.signInLink.setOnClickListener {
             val direction =
                 AuthLoginFragmentDirections.actionAuthLoginFragmentToAuthRegisterFragment()
-            navController.navigate(direction)
+            findNavController().navigate(direction)
         }
     }
 
     // Iniciar sesión
-    private fun logIn() {
-        val email = binding.authEmail.text.trim().toString()
-        val password = binding.authPassword.text.trim().toString()
+    fun logIn(view: View) {
 
-        // Campos vacíos
-        if (email.isEmpty() || password.isEmpty()) {
-            Snackbar.make(requireView(), R.string.auth_error_empty, Snackbar.LENGTH_SHORT).show()
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser!!
 
-            // Intentar autenticación con Firebase
-        } else {
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
+                    // Usuario pendiente de verificación
+                    if (!user.isEmailVerified) {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.auth_email_verification_title)
+                            .setMessage(R.string.auth_email_verification)
+                            .setNeutralButton(R.string.accept, null)
+                            // Reenvío de correo de verificación
+                            .setPositiveButton(R.string.auth_email_resend) { _, _ ->
+                                user.sendEmailVerification()
+                                    .addOnCompleteListener {
+                                        if (it.isSuccessful) {
+                                            Snackbar.make(view,
+                                                R.string.auth_email_success,
+                                                Snackbar.LENGTH_LONG).show()
+                                        }
+                                    }
+                                    .addOnFailureListener {
+                                        Snackbar.make(view,
+                                            R.string.auth_email_error,
+                                            Snackbar.LENGTH_LONG).show()
+                                    }
+                            }.show()
 
-                        // Usuario pendiente de verificación
-                        if (!auth.currentUser!!.isEmailVerified) {
-                            MaterialAlertDialogBuilder(requireContext())
-                                .setTitle(R.string.auth_email_verification_title)
-                                .setMessage(R.string.auth_email_verification)
-                                // TODO
-                                //.setNeutralButton(R.string.auth_resend_email, null)
-                                .setPositiveButton(R.string.accept, null)
-                                .show()
+                        // Nueva autenticación
+                        auth.signOut()
 
-                            // Nueva autenticación
-                            auth.signOut()
-
-                            // Usuario verificado, redirección a Home
-                        } else {
-                            startActivity(Intent(activity, HomeActivity::class.java))
-                            activity?.finish()
-                        }
-
+                        // Usuario verificado, redirección a Home
                     } else {
-                        Snackbar.make(requireView(), R.string.auth_error_login, Snackbar.LENGTH_SHORT)
-                            .show()
+
+                        // Redirección a Home
+                        val direction =
+                            AuthLoginFragmentDirections.actionAuthLoginFragmentToHomeActivity()
+                        findNavController().navigate(direction)
+
                     }
+
+                } else {
+                    Snackbar.make(view, R.string.auth_login_error, Snackbar.LENGTH_SHORT).show()
                 }
+            }
+    }
+
+    // Campos vacíos
+    private fun isEmptyFields(view: View): Boolean {
+        hideKeyboard()
+        email = binding.authEmail.text.trim().toString()
+        password = binding.authPassword.text.trim().toString()
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Snackbar.make(view, R.string.auth_empty_error, Snackbar.LENGTH_SHORT).show()
+            return true
         }
+
+        return false
     }
 }

@@ -5,34 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
-import es.murciaeduca.cprregionmurcia.registroasistencias.application.App
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.UsuarioEntity
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentAuthRegisterBinding
-import es.murciaeduca.cprregionmurcia.registroasistencias.utils.AppUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppUtil
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.hideKeyboard
 
-/**
- * Fragmento
- * Autenticación: Login
- */
 class AuthRegisterFragment : Fragment() {
-    private val userDao = App.getInstance().usuarioDao()
     private val auth: FirebaseAuth = Firebase.auth
-    private lateinit var navController: NavController
 
     private lateinit var name: String
-    private lateinit var lastName: String
     private lateinit var email: String
     private lateinit var password: String
 
@@ -43,9 +33,6 @@ class AuthRegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
-        navController = findNavController()
-
         // Vinculación de vistas
         _binding = FragmentAuthRegisterBinding.inflate(inflater, container, false)
         return binding.root
@@ -54,7 +41,6 @@ class AuthRegisterFragment : Fragment() {
     // Establecer listeners
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         clickListeners()
     }
 
@@ -69,90 +55,51 @@ class AuthRegisterFragment : Fragment() {
         binding.signInButton.setOnClickListener {
 
             // Comprobar conexión
-            if (!AppUtils.checkNetwork(requireContext())) {
-                Snackbar.make(requireView(), R.string.auth_error_connection, Snackbar.LENGTH_LONG)
+            if (!AppUtil.checkNetwork(requireContext())) {
+                Snackbar.make(requireView(), R.string.auth_connection_error, Snackbar.LENGTH_LONG)
                     .show()
                 return@setOnClickListener
             }
 
-            name = binding.authName.text.trim().toString()
-            lastName = binding.authLastName.text.trim().toString()
-            email = binding.authEmail.text.trim().toString()
-            password = binding.authPassword.text.trim().toString()
-
-            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Snackbar.make(requireView(), R.string.auth_error_empty, Snackbar.LENGTH_SHORT)
-                    .show()
-
-            } else {
-
-                // Comprobar si existe el usuario
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        if (userDao.userExists(email) > 0) {
-                            Snackbar.make(
-                                requireView(),
-                                R.string.auth_account_exists,
-                                Snackbar.LENGTH_LONG
-                            )
-                                .show()
-
-                        } else {
-                            createAccount()
-                        }
-                    }
-                }
+            if (!isEmptyFields(it) && checkPasswordField(it)) {
+                createAccount(it)
             }
         }
     }
 
     // Crear nueva cuenta
-    private fun createAccount() {
+    private fun createAccount(view: View) {
 
         // Comprobar contraseña
-        if (checkPasswordField()) {
+        if (checkPasswordField(view)) {
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    // Enviar correo de verificación
+                    validateEmail(view)
 
-                        // Crear usuario en la base de datos
-                        lifecycleScope.launch {
-                            withContext(Dispatchers.IO) {
-
-                                try {
-                                    userDao.save(UsuarioEntity(email, name, lastName))
-
-                                    // Enviar correo de verificación
-                                    sendEmailVerification()
-
-                                    // Borrar usuario de firebase en caso de error
-                                } catch (e: Exception) {
-                                    Snackbar.make(
-                                        requireView(),
-                                        R.string.auth_error_registry,
-                                        Snackbar.LENGTH_LONG
-                                    )
-                                        .show()
-                                    auth.currentUser!!.delete()
-                                }
-                            }
-                        }
-
-                    } else {
-                        Snackbar.make(
-                            requireView(),
-                            R.string.auth_error_registry,
-                            Snackbar.LENGTH_LONG
-                        )
-                            .show()
+                } else {
+                    // Obtener excepciones de Firebase
+                    val msg = try {
+                        throw it.exception!!
+                    } catch (e: FirebaseAuthWeakPasswordException) {
+                        R.string.auth_account_weak_password
+                    } catch (e: FirebaseAuthUserCollisionException) {
+                        R.string.auth_account_exists
+                    } catch (e: FirebaseAuthInvalidCredentialsException) {
+                        R.string.auth_email_invalid
+                    } catch (e: Exception) {
+                        R.string.auth_registry_error
                     }
+
+                    Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show()
                 }
+            }
         }
     }
 
-    // Enviar email de verificación
-    private fun sendEmailVerification() {
+    // Validar email
+    private fun validateEmail(view: View) {
         val user = auth.currentUser!!
 
         user.sendEmailVerification()
@@ -165,29 +112,52 @@ class AuthRegisterFragment : Fragment() {
                         .setPositiveButton(R.string.accept) { _, _ ->
                             val direction =
                                 AuthRegisterFragmentDirections.actionAuthRegisterFragmentToAuthLoginFragment()
-                            navController.navigate(direction)
+                            findNavController().navigate(direction)
                         }
                         .show()
+
+                    // Guardar nombre del usuario en SharedPreferences
+                    savePreferencesUserName()
                 }
             }
             .addOnFailureListener {
                 // Borrar usuario
                 user.delete()
-                Snackbar.make(requireView(), R.string.auth_error_registry, Snackbar.LENGTH_LONG)
-                    .show()
+                Snackbar.make(view, R.string.auth_registry_error, Snackbar.LENGTH_LONG).show()
             }
     }
 
-    // Comprobar contraseña
-    private fun checkPasswordField(): Boolean {
+    // Guardar nombre del usuario en SharedPreferences
+    private fun savePreferencesUserName() {
+        val sp = activity?.getSharedPreferences(email, 0)?.edit()
+        with(sp) {
+            this?.putString("user_name", name)
+            this?.apply()
+        }
+    }
+
+    // Campos vacíos
+    private fun isEmptyFields(view: View): Boolean {
+        hideKeyboard()
+        name = binding.authName.text.trim().toString()
+        email = binding.authEmail.text.trim().toString()
+        password = binding.authPassword.text.trim().toString()
+
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Snackbar.make(view, R.string.auth_empty_error, Snackbar.LENGTH_SHORT).show()
+            return true
+        }
+
+        return false
+    }
+
+    // Comprobar longitud de contraseña
+    private fun checkPasswordField(view: View): Boolean {
         if (password.length < 8) {
-            Snackbar.make(requireView(), R.string.auth_error_password, Snackbar.LENGTH_SHORT)
-                .show()
+            Snackbar.make(view, R.string.auth_password_error, Snackbar.LENGTH_SHORT).show()
             return false
         }
 
         return true
     }
 }
-
-

@@ -8,8 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="bg_grey">#ECEFF1</color>
-    <color name="bg_blue">#577bbd</color>
     <color name="dark_grey">#767676</color>
+    <color name="bg_grey">#F9F9F9</color>
+    <!--<color name="bg_blue_cpr">#6c8cc6</color>-->
+    <color name="bg_blue_cpr">#577BBD</color>
+
+    <color name="text_title">#6f8690</color>
+    <color name="text_dark">#262B32</color>
+    <color name="text_light">#8EA0A6</color>
     <color name="dark_orange">#B35919</color>
 </resources>

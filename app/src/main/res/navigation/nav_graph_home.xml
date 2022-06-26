@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/sesionesTodayFragment">
+    <fragment
+        android:id="@+id/sesionesPastFragment"
+        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones.SesionesPastFragment"
+        android:label="fragment_sesiones_past"
+        tools:layout="@layout/fragment_sesiones_past">
+        <action
+            android:id="@+id/action_sesionesPastFragment_to_sesionesTodayFragment"
+            app:destination="@id/sesionesTodayFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/sesionesTodayFragment"
+        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones.SesionesTodayFragment"
+        android:label="fragment_sesiones_today"
+        tools:layout="@layout/fragment_sesiones_today">
+        <action
+            android:id="@+id/action_sesionesTodayFragment_to_sesionesPastFragment"
+            app:destination="@id/sesionesPastFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_sesionesTodayFragment_to_asistenciaFragment"
+            app:destination="@id/asistenciaFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/asistenciaFragment"
+        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones.AsistenciaFragment"
+        android:label="fragment_asistencia"
+        tools:layout="@layout/fragment_asistencia" >
+        <action
+            android:id="@+id/action_asistenciaFragment_to_sesionesTodayFragment"
+            app:destination="@id/sesionesTodayFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+</navigation>

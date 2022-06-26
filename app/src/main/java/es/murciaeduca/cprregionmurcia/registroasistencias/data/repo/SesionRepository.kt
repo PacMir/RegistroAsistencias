@@ -1,23 +1,17 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.data.repo
 
 import es.murciaeduca.cprregionmurcia.registroasistencias.application.App
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao.UsuarioDao
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.UsuarioEntity
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao.SesionDao
 
-class TemplateRepository {
-    private val userDao: UsuarioDao = App.getInstance().usuarioDao()
+class SesionRepository {
+    private val sesionDao: SesionDao = App.getInstance().sesionDao()
 
-    suspend fun save(usuario: UsuarioEntity) = userDao.save(usuario)
-    suspend fun getLongName(email: String): String {
-        return userDao.getLongName(email)
+    suspend fun getAll(email: String) {
+        val response = sesionDao.getAll()
     }
 }
 
-
 /* Esto va en el archivo viewmodel
-
-
-
     class Factory(private val repository: TemplateRepository) :
         ViewModelProvider.Factory {
 
@@ -26,7 +20,6 @@ class TemplateRepository {
             return UsuarioViewModel(repository) as T
         }
     }
-
  */
 
 

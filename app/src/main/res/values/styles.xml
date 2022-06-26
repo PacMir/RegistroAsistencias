@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- EditText -->
     <style name="edit_text_style" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/dark_grey</item>
         <item name="android:paddingBottom">12dp</item>
@@ -25,6 +27,11 @@
     </style>
     <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/dark_orange</item>
+    </style>
+
+    <!-- Material Toolbar Menu Overflow -->
+    <style name="PopupMenuTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/text_title</item>
     </style>
 
 </resources>

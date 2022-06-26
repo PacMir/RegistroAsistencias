@@ -2,6 +2,7 @@ package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao
 
 import androidx.room.*
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.AsistenciaEntity
+import java.util.*
 
 @Dao
 interface AsistenciaDao {
@@ -14,6 +15,6 @@ interface AsistenciaDao {
     @Delete
     fun delete(asistencia: AsistenciaEntity)
 
-    @Query("SELECT * FROM asistencias WHERE ses_id = :sesion_id")
-    fun getAllInSesion(sesion_id: Long): List<AsistenciaEntity>
+    @Query("SELECT * FROM asistencias WHERE act_codigo = :codigo AND ses_inicio = :inicio")
+    fun getAllInSesion(codigo: String, inicio: Date): List<AsistenciaEntity>
 }

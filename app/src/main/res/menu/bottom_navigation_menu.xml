@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sesionesTodayFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_event"
+        android:title="@string/menu_sesiones_hoy" />
+    <item
+        android:id="@+id/sesionesPastFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_event_available"
+        android:title="@string/menu_sesiones_pasadas" />
+</menu>

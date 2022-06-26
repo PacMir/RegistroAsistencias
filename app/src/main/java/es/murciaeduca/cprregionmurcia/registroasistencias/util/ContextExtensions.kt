@@ -1,4 +1,4 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias.utils
+package es.murciaeduca.cprregionmurcia.registroasistencias.util
 
 import android.app.Activity
 import android.content.Context

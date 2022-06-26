@@ -15,7 +15,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.gms:google-services:4.3.12'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -26,7 +26,7 @@ buildscript {
 plugins {
     id 'com.android.application' version '7.2.1' apply false
     id 'com.android.library' version '7.2.1' apply false
-    // No cambiar de versión por problemas con Room las funciones suspendidas de las clases Dao
+    // No cambiar de versión por problemas con Room las funciones suspendidas de las clases Dao. Dejar la versión 1.6.0
     id 'org.jetbrains.kotlin.android' version '1.6.0' apply false
 }
 

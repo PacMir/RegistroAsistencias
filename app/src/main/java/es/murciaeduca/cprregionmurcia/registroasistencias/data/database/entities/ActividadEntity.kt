@@ -4,12 +4,15 @@ import androidx.room.*
 
 @Entity(
     tableName = "actividades",
-    indices = [Index("mod_id")],
+    indices = [
+        Index("user_email"),
+        Index("mod_codigo")
+    ],
     foreignKeys = [
         ForeignKey(
             entity = ModalidadEntity::class,
-            parentColumns = ["mod_id"],
-            childColumns = ["mod_id"],
+            parentColumns = ["mod_codigo"],
+            childColumns = ["mod_codigo"],
             onDelete = ForeignKey.RESTRICT
         )
     ],
@@ -20,14 +23,16 @@ data class ActividadEntity(
     val codigo: String,
     @ColumnInfo(name = "act_titulo")
     val titulo: String,
+    @ColumnInfo(name = "user_email")
+    val usuario_email: String,
+    @ColumnInfo(name = "mod_codigo")
+    val modalidad_codigo: String,
     @ColumnInfo(name = "nombre_responsable")
     val responsable: String,
     @ColumnInfo(name = "email_responsable")
     val responsable_email: String,
-    @ColumnInfo(name = "mod_id")
-    val modalidad_id: Int
 ) {
     override fun toString(): String {
-        return "ActividadEntity(codigo='$codigo', titulo='$titulo', responsable='$responsable', responsable_email='$responsable_email', modalidad_id=$modalidad_id)\n"
+        return "ActividadEntity(codigo='$codigo', titulo='$titulo', usuario_email='$usuario_email', modalidad_codigo='$modalidad_codigo', responsable='$responsable', responsable_email='$responsable_email')"
     }
 }

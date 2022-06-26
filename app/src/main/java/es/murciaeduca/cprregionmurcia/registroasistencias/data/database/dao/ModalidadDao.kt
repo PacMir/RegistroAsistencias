@@ -8,6 +8,6 @@ interface ModalidadDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun populateData(modalidades: List<ModalidadEntity>)
 
-    @Query("SELECT * FROM modalidades WHERE mod_id = :modalidad_id")
-    fun getById(modalidad_id: Int): ModalidadEntity
+    @Query("SELECT * FROM modalidades WHERE mod_codigo = :codigo")
+    fun getById(codigo: String): ModalidadEntity
 }

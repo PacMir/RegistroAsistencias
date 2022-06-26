@@ -14,12 +14,12 @@ interface ActividadDao {
     @Delete
     fun delete(actividad: ActividadEntity)
 
-    @Query("SELECT * FROM actividades")
-    fun getAll(): List<ActividadEntity>
+    @Query("SELECT * FROM actividades WHERE user_email = :email")
+    fun getAllFromUser(email: String): List<ActividadEntity>
 
     @Query("SELECT * FROM actividades WHERE act_codigo = :codigo")
     fun getById(codigo: String): ActividadEntity
 
-    @Query("DELETE FROM actividades")
-    fun deleteAll()
+    @Query("DELETE FROM actividades WHERE user_email = :email")
+    fun deleteAllFromUser(email: String)
 }

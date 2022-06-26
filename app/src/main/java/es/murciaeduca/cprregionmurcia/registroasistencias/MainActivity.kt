@@ -17,9 +17,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Ocultar barra
-        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
+
+        // Ocultar la barra superior
+        supportActionBar?.hide()
 
         // Vinculación de vistas
         binding = ActivityMainBinding.inflate(layoutInflater)

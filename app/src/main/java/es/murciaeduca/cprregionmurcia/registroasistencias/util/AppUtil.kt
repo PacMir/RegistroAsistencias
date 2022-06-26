@@ -1,11 +1,11 @@
-package es.murciaeduca.cprregionmurcia.registroasistencias.utils
+package es.murciaeduca.cprregionmurcia.registroasistencias.util
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
-object AppUtils {
+object AppUtil {
 
     // Comprobar conexión a Internet
     fun checkNetwork(context: Context): Boolean {
