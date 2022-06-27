@@ -16,26 +16,26 @@ import java.util.*
     ],
     foreignKeys = [
         ForeignKey(
-            entity = ActividadEntity::class,
+            entity = Actividad::class,
             parentColumns = ["act_codigo"],
             childColumns = ["act_codigo"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = SesionEntity::class,
+            entity = Sesion::class,
             parentColumns = ["act_codigo", "ses_inicio"],
             childColumns = ["act_codigo", "ses_inicio"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = ParticipanteEntity::class,
+            entity = Participante::class,
             parentColumns = ["act_codigo", "part_nif"],
             childColumns = ["act_codigo", "part_nif"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class AsistenciaEntity(
+data class Asistencia(
     @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
     @ColumnInfo(name = "ses_inicio")
@@ -48,6 +48,6 @@ data class AsistenciaEntity(
     val marca_temporal: Date,
 ) {
     override fun toString(): String {
-        return "AsistenciaEntity(actividad_codigo='$actividad_codigo', sesion_inicio=$sesion_inicio, participante_nif='$participante_nif', factor=$factor, marca_temporal='$marca_temporal')"
+        return "Asistencia(actividad_codigo='$actividad_codigo', sesion_inicio=$sesion_inicio, participante_nif='$participante_nif', factor=$factor, marca_temporal='$marca_temporal')"
     }
 }

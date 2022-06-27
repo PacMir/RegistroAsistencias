@@ -1,11 +1,10 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.data.repo
 
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao.SesionDao
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionEntity
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.Sesion
 import java.util.*
-import kotlinx.coroutines.flow.Flow
 
 class SesionRepository(private val dao: SesionDao) {
-    fun getPast(now: Date): Flow<List<SesionEntity>> = dao.getPast(now)
-    fun getToday(now: Date): Flow<List<SesionEntity>> = dao.getToday(now)
+    fun getPast(now: Date): List<Sesion> = dao.getPast(now)
+    fun getToday(now: Date): List<Sesion> = dao.getToday(now)
 }

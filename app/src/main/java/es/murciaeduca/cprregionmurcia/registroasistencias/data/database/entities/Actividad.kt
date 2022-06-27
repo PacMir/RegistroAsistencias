@@ -10,14 +10,14 @@ import androidx.room.*
     ],
     foreignKeys = [
         ForeignKey(
-            entity = ModalidadEntity::class,
+            entity = Modalidad::class,
             parentColumns = ["mod_codigo"],
             childColumns = ["mod_codigo"],
             onDelete = ForeignKey.RESTRICT
         )
     ],
 )
-data class ActividadEntity(
+data class Actividad(
     @PrimaryKey
     @ColumnInfo(name = "act_codigo")
     val codigo: String,
@@ -33,6 +33,6 @@ data class ActividadEntity(
     val responsable_email: String,
 ) {
     override fun toString(): String {
-        return "ActividadEntity(codigo='$codigo', titulo='$titulo', usuario_email='$usuario_email', modalidad_codigo='$modalidad_codigo', responsable='$responsable', responsable_email='$responsable_email')"
+        return "Actividad(codigo='$codigo', titulo='$titulo', usuario_email='$usuario_email', modalidad_codigo='$modalidad_codigo', responsable='$responsable', responsable_email='$responsable_email')"
     }
 }

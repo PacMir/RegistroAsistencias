@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "modalidades")
-data class ModalidadEntity(
+data class Modalidad(
     @PrimaryKey
     @ColumnInfo(name = "mod_codigo")
     val codigo: String,
@@ -14,6 +14,6 @@ data class ModalidadEntity(
     val denominacion: String,
 ) {
     override fun toString(): String {
-        return "ModalidadEntity(codigo='$codigo', denominacion='$denominacion')"
+        return "Modalidad(codigo='$codigo', denominacion='$denominacion')"
     }
 }

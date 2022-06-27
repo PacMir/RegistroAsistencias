@@ -14,14 +14,14 @@ import java.util.*
     ],
     foreignKeys = [
         ForeignKey(
-            entity = ActividadEntity::class,
+            entity = Actividad::class,
             parentColumns = ["act_codigo"],
             childColumns = ["act_codigo"],
             onDelete = ForeignKey.CASCADE
         )
     ],
 )
-data class SesionEntity(
+data class Sesion(
     @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
     @ColumnInfo(name = "ses_inicio")
@@ -34,7 +34,7 @@ data class SesionEntity(
     val observaciones: String?,
 ) {
     override fun toString(): String {
-        return "SesionEntity(actividad_codigo='$actividad_codigo', inicio=$inicio, fin=$fin, carga_marca_temporal=$carga_marca_temporal, observaciones=$observaciones)"
+        return "Sesion(actividad_codigo='$actividad_codigo', inicio=$inicio, fin=$fin, carga_marca_temporal=$carga_marca_temporal, observaciones=$observaciones)"
     }
 }
 

@@ -12,14 +12,14 @@ import androidx.room.*
     ],
     foreignKeys = [
         ForeignKey(
-            entity = ActividadEntity::class,
+            entity = Actividad::class,
             parentColumns = ["act_codigo"],
             childColumns = ["act_codigo"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class ParticipanteEntity(
+data class Participante(
     @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
     @ColumnInfo(name = "part_nif")
@@ -32,6 +32,6 @@ data class ParticipanteEntity(
     val email: String
 ) {
     override fun toString(): String {
-        return "ParticipanteEntity(actividad_codigo='$actividad_codigo', nif='$nif', nombre='$nombre', apellidos='$apellidos', email='$email')"
+        return "Participante(actividad_codigo='$actividad_codigo', nif='$nif', nombre='$nombre', apellidos='$apellidos', email='$email')"
     }
 }

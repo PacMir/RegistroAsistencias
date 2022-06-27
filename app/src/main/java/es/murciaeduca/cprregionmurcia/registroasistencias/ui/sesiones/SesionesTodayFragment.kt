@@ -5,7 +5,11 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
+import es.murciaeduca.cprregionmurcia.registroasistencias.adapters.SesionAdapter
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.Sesion
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentSesionesTodayBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.SesionViewModel
 
@@ -13,6 +17,9 @@ class SesionesTodayFragment : Fragment() {
     private var _binding: FragmentSesionesTodayBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SesionViewModel by viewModels()
+    lateinit var sesionRV: RecyclerView
+    lateinit var adapter: SesionAdapter
+    lateinit var list: List<Sesion>
 
     // Informar al sistema que el fragmento de la barra de la app participa en la propagación del menú de opciones
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,8 +33,20 @@ class SesionesTodayFragment : Fragment() {
     ): View {
         // Vinculación de vistas
         _binding = FragmentSesionesTodayBinding.inflate(inflater, container, false)
+
+        //binding.lifecycleOwner = this
+
+        list = ArrayList()
+        adapter = SesionAdapter(list)
+        sesionRV = binding.sesionesHoyRV
+        sesionRV.layoutManager = LinearLayoutManager(context)
+        sesionRV.adapter = adapter
+
+       //viewModel.getToday().observer
+
         return binding.root
     }
+
 
     // Establecer listeners
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +56,6 @@ class SesionesTodayFragment : Fragment() {
 
     // Listeners
     private fun clickListeners() {
-
     }
 
     // Toolbar

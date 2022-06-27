@@ -1,24 +1,23 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao
 
 import androidx.room.*
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionEntity
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.Sesion
 import java.util.*
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SesionDao {
     @Query("SELECT * FROM sesiones WHERE ses_fin < :now")
-    fun getPast(now: Date): Flow<List<SesionEntity>>
+    fun getPast(now: Date): List<Sesion>
 
     @Query("SELECT * FROM sesiones WHERE ses_fin > :now")
-    fun getToday(now: Date): Flow<List<SesionEntity>>
+    fun getToday(now: Date): List<Sesion>
 
     @Insert
-    fun save(sesion: SesionEntity)
+    fun save(sesion: Sesion)
 
     @Update
-    fun update(sesion: SesionEntity)
+    fun update(sesion: Sesion)
 
     @Delete
-    fun delete(sesion: SesionEntity)
+    fun delete(sesion: Sesion)
 }

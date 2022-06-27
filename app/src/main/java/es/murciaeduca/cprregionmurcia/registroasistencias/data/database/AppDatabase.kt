@@ -10,7 +10,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateConverter
 
 @Database(
-    entities = [SesionEntity::class, ActividadEntity::class, ModalidadEntity::class, ParticipanteEntity::class, AsistenciaEntity::class],
+    entities = [Sesion::class, Actividad::class, Modalidad::class, Participante::class, Asistencia::class],
     exportSchema = true,
     version = 1
 )
@@ -72,15 +72,15 @@ abstract class AppDatabase : RoomDatabase() {
 
         // Datos iniciales de modalidades
         private val PREP_MODS = listOf(
-            ModalidadEntity("CON", "Congreso"),
-            ModalidadEntity("CUR", "Curso"),
-            ModalidadEntity("GT", "Grupo de trabajo"),
-            ModalidadEntity("JOR", "Jornadas"),
-            ModalidadEntity("PFC", "Proyecto de formación en centros"),
-            ModalidadEntity("ST", "Seminario temático"),
-            ModalidadEntity("SED", "Seminario de equipo docente"),
-            ModalidadEntity("PIE", "Proyecto de innovación"),
-            ModalidadEntity("PIV", "Proyecto de investigación")
+            Modalidad("CON", "Congreso"),
+            Modalidad("CUR", "Curso"),
+            Modalidad("GT", "Grupo de trabajo"),
+            Modalidad("JOR", "Jornadas"),
+            Modalidad("PFC", "Proyecto de formación en centros"),
+            Modalidad("ST", "Seminario temático"),
+            Modalidad("SED", "Seminario de equipo docente"),
+            Modalidad("PIE", "Proyecto de innovación"),
+            Modalidad("PIV", "Proyecto de investigación")
         )
          */
 
