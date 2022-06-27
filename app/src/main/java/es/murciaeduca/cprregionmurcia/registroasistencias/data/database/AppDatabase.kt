@@ -21,6 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun modalidadesDao(): ModalidadDao
     abstract fun participanteDao(): ParticipanteDao
     abstract fun asistenciaDao(): AsistenciaDao
+    abstract fun sesionActividaDao() : SesionActividadDao
 
     companion object {
 

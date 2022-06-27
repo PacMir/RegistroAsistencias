@@ -5,21 +5,25 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.adapters.SesionAdapter
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.Sesion
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionActividad
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentSesionesTodayBinding
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateUtil
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.SesionViewModel
+import java.util.*
 
 class SesionesTodayFragment : Fragment() {
     private var _binding: FragmentSesionesTodayBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SesionViewModel by viewModels()
-    lateinit var sesionRV: RecyclerView
-    lateinit var adapter: SesionAdapter
-    lateinit var list: List<Sesion>
+    private lateinit var sesionRV: RecyclerView
+    private lateinit var sesionAdapter: SesionAdapter
+    private val sesionList: List<SesionActividad> = ArrayList()
 
     // Informar al sistema que el fragmento de la barra de la app participa en la propagación del menú de opciones
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +38,17 @@ class SesionesTodayFragment : Fragment() {
         // Vinculación de vistas
         _binding = FragmentSesionesTodayBinding.inflate(inflater, container, false)
 
-        //binding.lifecycleOwner = this
+        binding.todayDate.text = DateUtil.nowToString(DateFormats.dd_MM_YY.format)
 
-        list = ArrayList()
-        adapter = SesionAdapter(list)
+        sesionAdapter = SesionAdapter(sesionList)
         sesionRV = binding.sesionesHoyRV
+        sesionRV.adapter = sesionAdapter
         sesionRV.layoutManager = LinearLayoutManager(context)
-        sesionRV.adapter = adapter
 
-       //viewModel.getToday().observer
+        viewModel.getPast()
+        viewModel.list.observe(viewLifecycleOwner, Observer {
+            binding.sesionesHoyRV.adapter = SesionAdapter(it)
+        })
 
         return binding.root
     }

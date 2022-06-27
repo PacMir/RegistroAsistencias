@@ -1,10 +1,10 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.data.repo
 
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao.SesionDao
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.Sesion
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.dao.SesionActividadDao
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionActividad
 import java.util.*
 
-class SesionRepository(private val dao: SesionDao) {
-    fun getPast(now: Date): List<Sesion> = dao.getPast(now)
-    fun getToday(now: Date): List<Sesion> = dao.getToday(now)
+class SesionRepository(private val dao: SesionActividadDao) {
+    fun getPast(email: String, now: Date): List<SesionActividad> = dao.getPast(email, now)
+    fun getToday(email: String, now: Date): List<SesionActividad> = dao.getToday(email, now)
 }

@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
-object AppUtil {
+object ConnUtil {
 
     // Comprobar conexión a Internet
     fun checkNetwork(context: Context): Boolean {

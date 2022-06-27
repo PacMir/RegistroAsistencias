@@ -16,7 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentAuthRegisterBinding
-import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppUtil
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.ConnUtil
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.hideKeyboard
 
 class AuthRegisterFragment : Fragment() {
@@ -55,7 +55,7 @@ class AuthRegisterFragment : Fragment() {
         binding.signInButton.setOnClickListener {
 
             // Comprobar conexión
-            if (!AppUtil.checkNetwork(requireContext())) {
+            if (!ConnUtil.checkNetwork(requireContext())) {
                 Snackbar.make(requireView(), R.string.auth_connection_error, Snackbar.LENGTH_LONG)
                     .show()
                 return@setOnClickListener
