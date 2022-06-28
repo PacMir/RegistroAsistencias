@@ -1,5 +1,6 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 
+import androidx.annotation.NonNull
 import androidx.room.*
 
 @Entity(
@@ -20,15 +21,15 @@ import androidx.room.*
     ]
 )
 data class Participante(
-    @ColumnInfo(name = "act_codigo")
+    @NonNull @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
-    @ColumnInfo(name = "part_nif")
+    @NonNull @ColumnInfo(name = "part_nif")
     val nif: String,
-    @ColumnInfo(name = "part_nombre")
+    @NonNull @ColumnInfo(name = "part_nombre")
     val nombre: String,
-    @ColumnInfo(name = "part_apellidos")
+    @NonNull @ColumnInfo(name = "part_apellidos")
     val apellidos: String,
-    @ColumnInfo(name = "part_email")
+    @NonNull @ColumnInfo(name = "part_email")
     val email: String
 ) {
     override fun toString(): String {

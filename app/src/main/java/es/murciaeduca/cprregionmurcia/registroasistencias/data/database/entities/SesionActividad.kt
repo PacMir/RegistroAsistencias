@@ -8,5 +8,6 @@ data class SesionActividad(
     val titulo: String,
     val responsable: String,
     val inicio: Date,
-    val fin: Date
+    val fin: Date,
+    val num_participantes: Int
 )

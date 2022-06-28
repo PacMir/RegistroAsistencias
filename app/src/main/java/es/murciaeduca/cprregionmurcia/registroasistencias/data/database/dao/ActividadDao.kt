@@ -14,9 +14,6 @@ interface ActividadDao {
     @Delete
     fun delete(actividad: Actividad)
 
-    @Query("SELECT * FROM actividades WHERE user_email = :email")
-    fun getAllFromUser(email: String): List<Actividad>
-
     @Query("SELECT * FROM actividades WHERE act_codigo = :codigo")
     fun getById(codigo: String): Actividad
 

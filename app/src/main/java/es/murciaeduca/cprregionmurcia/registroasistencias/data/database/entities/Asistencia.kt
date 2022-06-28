@@ -1,5 +1,6 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -10,6 +11,8 @@ import java.util.*
     tableName = "asistencias",
     primaryKeys = ["act_codigo", "ses_inicio", "part_nif"],
     indices = [
+        Index(name="index_part_fk", value = ["act_codigo", "part_nif"]),
+        Index(name="index_ses_fk", value = ["act_codigo", "ses_inicio"]),
         Index("act_codigo"),
         Index("ses_inicio"),
         Index("part_nif")
@@ -36,17 +39,17 @@ import java.util.*
     ]
 )
 data class Asistencia(
-    @ColumnInfo(name = "act_codigo")
+    @NonNull @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
-    @ColumnInfo(name = "ses_inicio")
+    @NonNull @ColumnInfo(name = "ses_inicio")
     val sesion_inicio: Date,
-    @ColumnInfo(name = "part_nif")
+    @NonNull @ColumnInfo(name = "part_nif")
     val participante_nif: String,
-    @ColumnInfo(name = "factor")
+    @NonNull @ColumnInfo(name = "factor")
     val factor: Float,
-    @ColumnInfo(name= "tipo_registro")
+    @NonNull @ColumnInfo(name= "tipo_registro")
     val tipo_registro: Int,
-    @ColumnInfo(name = "marca_temporal")
+    @NonNull @ColumnInfo(name = "marca_temporal")
     val marca_temporal: Date,
 ) {
     override fun toString(): String {

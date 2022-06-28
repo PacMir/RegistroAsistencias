@@ -1,5 +1,6 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 
+import androidx.annotation.NonNull
 import androidx.room.*
 import java.util.*
 
@@ -22,11 +23,11 @@ import java.util.*
     ],
 )
 data class Sesion(
-    @ColumnInfo(name = "act_codigo")
+    @NonNull @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
-    @ColumnInfo(name = "ses_inicio")
+    @NonNull @ColumnInfo(name = "ses_inicio")
     val inicio: Date,
-    @ColumnInfo(name = "ses_fin")
+    @NonNull @ColumnInfo(name = "ses_fin")
     val fin: Date,
     @ColumnInfo(name = "ses_carga_marca_temporal")
     val carga_marca_temporal: Date?,

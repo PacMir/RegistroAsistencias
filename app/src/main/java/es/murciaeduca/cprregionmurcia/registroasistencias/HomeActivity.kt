@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         binding.bottomNavigation.setupWithNavController(navController)
 
-        // Definir ambas opciones del bottom navigation del como del mismo nivel jerárquico
+        // Definir ambas opciones del bottom navigation como del mismo nivel jerárquico
         appBarConfiguration =
             AppBarConfiguration(setOf(R.id.sesionesTodayFragment, R.id.sesionesPastFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)

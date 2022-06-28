@@ -40,11 +40,6 @@ class AuthLoginFragment : Fragment() {
         clickListeners()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     // Listeners
     private fun clickListeners() {
 
@@ -126,5 +121,10 @@ class AuthLoginFragment : Fragment() {
         }
 
         return false
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

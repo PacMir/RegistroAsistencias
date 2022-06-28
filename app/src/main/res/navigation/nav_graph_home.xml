@@ -14,6 +14,11 @@
             app:destination="@id/sesionesTodayFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_sesionesPastFragment_to_asistenciaPastFragment"
+            app:destination="@id/asistenciaPastFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/sesionesTodayFragment"
@@ -33,13 +38,36 @@
     </fragment>
     <fragment
         android:id="@+id/asistenciaFragment"
-        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones.AsistenciaFragment"
+        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.participantes.AsistenciaFragment"
         android:label="Asistencia"
-        tools:layout="@layout/fragment_asistencia" >
+        tools:layout="@layout/fragment_asistencia">
         <action
             android:id="@+id/action_asistenciaFragment_to_sesionesTodayFragment"
             app:destination="@id/sesionesTodayFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <argument
+            android:name="actCodigo"
+            app:argType="string" />
+        <argument
+            android:name="sesInicio"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/asistenciaPastFragment"
+        android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.participantes.AsistenciaPastFragment"
+        android:label="Asistencia"
+        tools:layout="@layout/fragment_asistencia_past" >
+        <action
+            android:id="@+id/action_asistenciaPastFragment_to_sesionesPastFragment"
+            app:destination="@id/sesionesPastFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <argument
+            android:name="actCodigo"
+            app:argType="string" />
+        <argument
+            android:name="sesInicio"
+            app:argType="long" />
     </fragment>
 </navigation>
