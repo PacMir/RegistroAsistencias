@@ -6,43 +6,30 @@
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1425" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/edit_text_background.xml" value="0.1965" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_account_circle.xml" value="0.1425" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_camera.xml" value="0.279" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_cloud_download.xml" value="0.279" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_cloud_sync.xml" value="0.1895" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_cloud_upload.xml" value="0.279" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_email.xml" value="0.332" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_exit.xml" value="0.279" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_help.xml" value="0.279" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_lock.xml" value="0.332" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_more_vert_white.xml" value="0.279" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_person_pin.xml" value="0.1425" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_person_search.xml" value="0.279" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/ic_settings.xml" value="0.279" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/inputs.xml" value="0.195" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/item_border.xml" value="0.279" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/drawable/text_icon_rounded.xml" value="0.279" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/activity_auth.xml" value="0.33" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/activity_home.xml" value="0.3875" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/activity_main.xml" value="0.3875" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_asistencia.xml" value="0.3875" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_auth_login.xml" value="0.33" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_auth_register.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_login.xml" value="0.17147922998986828" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_sesion_main.xml" value="0.3875" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_sesion_past.xml" value="0.3875" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_sesion_today.xml" value="0.3875" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_sesiones_container.xml" value="0.3875" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_sesiones_past.xml" value="0.3875" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/fragment_sesiones_today.xml" value="0.33" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/layout/sesion_item.xml" value="0.3875" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.38645833333333335" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/menu/sesiones_menu_overflow.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/menu/top_app_bar.xml" value="0.365625" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/RegistroAsistencias/app/src/main/res/xml/progressbar.xml" value="0.24909420289855072" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/drawable/ic_person.xml" value="0.3425" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/drawable/ic_time.xml" value="0.3425" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/drawable/item_border.xml" value="0.3425" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/drawable/title_border_bottom.xml" value="0.3425" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/activity_home.xml" value="0.371875" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/activity_main.xml" value="0.371875" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/fragment_asistencia.xml" value="0.371875" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/fragment_auth_login.xml" value="0.5966386554621849" />
         <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/fragment_auth_register.xml" value="0.371875" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/fragment_sesiones_past.xml" value="0.371875" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/fragment_sesiones_today.xml" value="0.371875" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/layout/sesion_item.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/CPR/AndroidStudioProjects/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.371875" />
       </map>
     </option>
   </component>

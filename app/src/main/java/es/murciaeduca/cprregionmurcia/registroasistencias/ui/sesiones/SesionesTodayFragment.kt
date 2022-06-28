@@ -38,30 +38,19 @@ class SesionesTodayFragment : Fragment() {
         // Vinculación de vistas
         _binding = FragmentSesionesTodayBinding.inflate(inflater, container, false)
 
-        binding.todayDate.text = DateUtil.nowToString(DateFormats.dd_MM_YY.format)
+        binding.todayDate.text = DateUtil.nowToString(DateFormats.DATE_TEXT.format)
 
         sesionAdapter = SesionAdapter(sesionList)
         sesionRV = binding.sesionesHoyRV
         sesionRV.adapter = sesionAdapter
         sesionRV.layoutManager = LinearLayoutManager(context)
 
-        viewModel.getPast()
+        viewModel.getToday()
         viewModel.list.observe(viewLifecycleOwner, Observer {
             binding.sesionesHoyRV.adapter = SesionAdapter(it)
         })
 
         return binding.root
-    }
-
-
-    // Establecer listeners
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        clickListeners()
-    }
-
-    // Listeners
-    private fun clickListeners() {
     }
 
     // Toolbar
@@ -75,7 +64,12 @@ class SesionesTodayFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.toolbarDownload -> {
-                Toast.makeText(requireActivity(), "Descarga", Toast.LENGTH_SHORT).show()
+                try {
+                    viewModel.insertToday()
+                } catch (e: Exception) {
+                    Toast.makeText(requireActivity(), "Error en la descarga", Toast.LENGTH_SHORT)
+                        .show()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

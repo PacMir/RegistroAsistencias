@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/sesionesPastFragment"
         android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones.SesionesPastFragment"
-        android:label="fragment_sesiones_past"
+        android:label="Sesiones pasadas"
         tools:layout="@layout/fragment_sesiones_past">
         <action
             android:id="@+id/action_sesionesPastFragment_to_sesionesTodayFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/sesionesTodayFragment"
         android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones.SesionesTodayFragment"
-        android:label="fragment_sesiones_today"
+        android:label="Sesiones hoy"
         tools:layout="@layout/fragment_sesiones_today">
         <action
             android:id="@+id/action_sesionesTodayFragment_to_sesionesPastFragment"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/asistenciaFragment"
         android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones.AsistenciaFragment"
-        android:label="fragment_asistencia"
+        android:label="Asistencia"
         tools:layout="@layout/fragment_asistencia" >
         <action
             android:id="@+id/action_asistenciaFragment_to_sesionesTodayFragment"

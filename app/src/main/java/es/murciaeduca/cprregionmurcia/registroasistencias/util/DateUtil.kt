@@ -6,9 +6,10 @@ import java.util.*
 
 @Suppress("EnumEntryName")
 enum class DateFormats(val format: String) {
-    dd_MM_YY_HH_mm("dd/MM/YYYY HH:mm"),
-    dd_MM_YY("dd/MM/YYYY"),
-    HH_mm("HH:mm")
+    DATE_TIME("dd/MM/yyyy HH:mm"),
+    DATE("dd/MM/yyyy"),
+    TIME("HH:mm"),
+    DATE_TEXT("dd MMMM")
 }
 
 object DateUtil {
@@ -24,14 +25,14 @@ object DateUtil {
     fun stringToDate(date: String?): Date? {
         if (date == null) return null
 
-        return SimpleDateFormat(DateFormats.dd_MM_YY_HH_mm.format).parse(date)
+        return SimpleDateFormat(DateFormats.DATE_TIME.format).parse(date)
     }
 
     fun dateToString(date: Date?, format: String?): String? {
         if (date == null) return null
-
-        val f = format ?: DateFormats.dd_MM_YY_HH_mm.format
-        return SimpleDateFormat(f as String?).format(date)
+        val locale = Locale("ES", "es")
+        val f = format ?: DateFormats.DATE_TIME.format
+        return SimpleDateFormat(f as String?, locale).format(date)
     }
 
     fun duration(dateInicio: Date, dateFin: Date): String {
@@ -42,9 +43,9 @@ object DateUtil {
         val diffMinutes = diffMinutesF.toInt().toString()
         val diffHours = diffHoursF.toInt().toString()
 
-        var output = "${diffHours}h."
+        var output = "${diffHours}h"
         if (diffHoursF % 1.0 != 0.0)
-            output += " ${diffMinutes}m."
+            output += "${diffMinutes}m"
 
         return output
     }

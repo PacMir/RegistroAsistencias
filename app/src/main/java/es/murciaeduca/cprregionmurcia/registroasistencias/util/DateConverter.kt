@@ -5,8 +5,10 @@ import java.util.*
 
 class DateConverter {
     @TypeConverter
-    fun dateToTimestamp(date: Date) : Long = date.time
+    fun dateToTimestamp(date: Date?): Long? = date?.time
 
     @TypeConverter
-    fun timestampToDate(timestamp: Long) : Date = Date(timestamp)
+    fun timestampToDate(timestamp: Long?): Date? {
+        return if (timestamp == null) null else Date(timestamp)
+    }
 }

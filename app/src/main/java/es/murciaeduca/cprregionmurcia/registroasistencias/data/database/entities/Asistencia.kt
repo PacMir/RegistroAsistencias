@@ -44,10 +44,12 @@ data class Asistencia(
     val participante_nif: String,
     @ColumnInfo(name = "factor")
     val factor: Float,
+    @ColumnInfo(name= "tipo_registro")
+    val tipo_registro: Int,
     @ColumnInfo(name = "marca_temporal")
     val marca_temporal: Date,
 ) {
     override fun toString(): String {
-        return "Asistencia(actividad_codigo='$actividad_codigo', sesion_inicio=$sesion_inicio, participante_nif='$participante_nif', factor=$factor, marca_temporal='$marca_temporal')"
+        return "Asistencia(actividad_codigo='$actividad_codigo', sesion_inicio=$sesion_inicio, participante_nif='$participante_nif', factor=$factor, tipo_registro=$tipo_registro, marca_temporal=$marca_temporal)"
     }
 }

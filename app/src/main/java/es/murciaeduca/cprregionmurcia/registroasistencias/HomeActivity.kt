@@ -24,7 +24,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // No mostrar nombre de la app en la barra
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        //supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // Vinculación de vistas
         binding = ActivityHomeBinding.inflate(layoutInflater)

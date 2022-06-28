@@ -3,10 +3,11 @@ package es.murciaeduca.cprregionmurcia.registroasistencias.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionActividad
+import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.SesionItemBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateUtil
 
@@ -23,32 +24,30 @@ class SesionAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.titulo.text = list[position].codigo + " " + list[position].titulo
-        holder.modalidad.text = list[position].modalidad
-        holder.responsable.text = "Director/a: " + list[position].responsable
-        holder.inicio.text = "Comienzo: " + DateUtil.dateToString(list[position].inicio, DateFormats.HH_mm.format)
-        holder.fin.text = "Finalización: " + DateUtil.dateToString(list[position].fin, DateFormats.HH_mm.format)
-        holder.duracion.text = DateUtil.duration(list[position].inicio, list[position].fin)
+        val s = list[position]
+
+        with(holder) {
+
+            // Click en el elemento
+            itemView.setOnClickListener{
+                Toast.makeText(itemView.context, s.codigo, Toast.LENGTH_SHORT).show()
+            }
+
+            binding.titulo.text = s.codigo + " " + s.titulo
+            binding.participantes.text = 23.toString()
+            binding.modalidad.text = s.modalidad
+            binding.responsable.text = "Director/a: " + s.responsable
+            binding.inicio.text =
+                "Comienzo: " + DateUtil.dateToString(s.inicio, DateFormats.TIME.format) + "h"
+            binding.fin.text =
+                "Finalización: " + DateUtil.dateToString(s.fin, DateFormats.TIME.format) + "h"
+            binding.duracion.text = DateUtil.duration(s.inicio, s.fin)
+        }
     }
 
     override fun getItemCount(): Int = list.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titulo: TextView
-        val modalidad: TextView
-
-        val inicio: TextView
-        val fin: TextView
-        val duracion: TextView
-        val responsable: TextView
-
-        init {
-            titulo = view.findViewById(R.id.titulo)
-            modalidad = view.findViewById(R.id.modalidad)
-            responsable = view.findViewById(R.id.responsable)
-            inicio = view.findViewById(R.id.inicio)
-            fin = view.findViewById(R.id.fin)
-            duracion = view.findViewById(R.id.duracion)
-        }
+        val binding = SesionItemBinding.bind(view)
     }
 }
