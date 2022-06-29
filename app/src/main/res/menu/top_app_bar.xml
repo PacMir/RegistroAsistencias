@@ -9,21 +9,18 @@
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
-    <group
-        android:id="@+id/toolbarPasadas"
-        android:checkableBehavior="single"
-        android:visible="false">
-        <item
-            android:id="@+id/toolbarUpload"
-            android:icon="@drawable/ic_cloud_upload"
-            android:title="@string/toolbar_upload"
-            app:showAsAction="always" />
-        <item
-            android:id="@+id/toolbarSearch"
-            android:icon="@drawable/ic_person_search"
-            android:title="@string/toolbar_search"
-            app:showAsAction="always" />
-    </group>
+    <item
+        android:id="@+id/toolbarScanQr"
+        android:icon="@drawable/ic_qr_scanner"
+        android:title="@string/toolbar_qr_scan"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/toolbarSearch"
+        android:icon="@drawable/ic_person_search"
+        android:title="@string/toolbar_search"
+        android:visible="false"
+        app:showAsAction="always" />
     <item
         android:id="@+id/toolbarDropdown"
         android:icon="@drawable/ic_more_vert_white"

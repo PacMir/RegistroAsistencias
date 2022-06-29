@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/todayDate"
-        style="@style/text_title"
+        style="@style/card_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

@@ -28,12 +28,17 @@
     <string name="auth_verify">Por favor, haga clic en el enlace proporcionado en el mismo para verificar su cuenta.</string>
     <string name="auth_connection_error">No hay conexión a Internet</string>
 
+    <!-- Cards -->
+    <string name="asiste_qr">QR</string>
+    <string name="asiste_manual">Manual</string>
+
     <!-- Menú toolbar -->
     <string name="toolbar_title_actividades">Actividades</string>
     <string name="toolbar_title_sesiones">Sesiones</string>
     <string name="toolbar_upload">Enviar datos</string>
     <string name="toolbar_download">Descargar datos</string>
     <string name="toolbar_search">Buscar participante</string>
+    <string name="toolbar_qr_scan">QR scanner</string>
 
     <!-- Menú overflow -->
     <string name="toolbar_of_logout">Salir</string>
@@ -43,7 +48,13 @@
     <!-- Menú tabs -->
     <string name="menu_sesiones_hoy">Hoy</string>
     <string name="menu_sesiones_pasadas">Pasadas</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- QR -->
+    <string name="permission_camera">El permiso de cámara es necesario para realizar esta acción. Por favor, actívelo desde los ajustes del dispositivo.</string>
+    <string name="permission_camera_title">Acceso a la cámara</string>
+    <string name="qr_info">Pulse el botón y sitúe el código QR dentro del marco</string>
+    <string name="qr_wrong_format">Formato no válido</string>
+    <string name="qr_already_checked">Ya existe una asistencia del/la usuario/a:</string>
+    <string name="qr_checked">Asistencia registrada</string>
+    <string name="qr_not_allowed">No es posible registrar la asistencia</string>
 </resources>

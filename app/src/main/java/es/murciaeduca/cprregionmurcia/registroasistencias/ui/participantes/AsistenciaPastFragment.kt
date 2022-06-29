@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.adapters.ParticipanteAdapter
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentAsistenciaPastBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.ActividadViewModel
@@ -17,6 +19,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.Participant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+
 
 class AsistenciaPastFragment : Fragment() {
 
@@ -32,10 +35,9 @@ class AsistenciaPastFragment : Fragment() {
     private val viewModel: ParticipanteViewModel by viewModels()
     private val actViewModel: ActividadViewModel by viewModels()
 
-    private lateinit var actCodigo: String
-
     // lateinit no soporta tipos primitivos
     private lateinit var sesInicio: Date
+    private lateinit var actCodigo: String
 
     // Informar al sistema que el fragmento de la barra de la app participa en la propagación del menú de opciones
     // Recibir parámetros
@@ -60,6 +62,10 @@ class AsistenciaPastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Ocultar barra de navegación
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation).visibility =
+            View.GONE
+
         // Título actividad
         lifecycle.coroutineScope.launch(Dispatchers.IO) {
             val actividad = actViewModel.getById(actCodigo)
@@ -79,6 +85,11 @@ class AsistenciaPastFragment : Fragment() {
             }
         }
     }
+
+    // Toolbar
+    /*override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

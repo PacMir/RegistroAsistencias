@@ -11,21 +11,21 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
 
 class SesionAdapter(
-    private val onItemClicked: (SesionActividad) -> Unit
+    private val onItemClicked: (SesionActividad) -> Unit,
 ) : ListAdapter<SesionActividad, SesionAdapter.ViewHolder>(DiffCallback) {
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<SesionActividad>() {
             override fun areItemsTheSame(
                 oldItem: SesionActividad,
-                newItem: SesionActividad
+                newItem: SesionActividad,
             ): Boolean {
                 return (oldItem.codigo == newItem.codigo && oldItem.inicio == newItem.inicio)
             }
 
             override fun areContentsTheSame(
                 oldItem: SesionActividad,
-                newItem: SesionActividad
+                newItem: SesionActividad,
             ): Boolean {
                 return oldItem == newItem
             }
@@ -54,17 +54,18 @@ class SesionAdapter(
     }
 
     class ViewHolder(
-        private var binding: SesionItemBinding
+        private var binding: SesionItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(s: SesionActividad) {
+            val horario = "Horario: de " + AppDateUtil.dateToString(s.inicio,
+                DateFormats.TIME.format) + "h" + " a " + AppDateUtil.dateToString(s.fin,
+                DateFormats.TIME.format) + "h"
+
             binding.titulo.text = s.codigo + " " + s.titulo
             binding.participantes.text = 23.toString()
             binding.modalidad.text = s.modalidad
-            binding.responsable.text = "Director/a: " + s.responsable
-            binding.inicio.text =
-                "Comienzo: " + AppDateUtil.dateToString(s.inicio, DateFormats.TIME.format) + "h"
-            binding.fin.text =
-                "Finalización: " + AppDateUtil.dateToString(s.fin, DateFormats.TIME.format) + "h"
+            binding.responsable.text = "Director/a: ${s.responsable}"
+            binding.horario.text = horario
             binding.duracion.text = AppDateUtil.duration(s.inicio, s.fin)
         }
     }

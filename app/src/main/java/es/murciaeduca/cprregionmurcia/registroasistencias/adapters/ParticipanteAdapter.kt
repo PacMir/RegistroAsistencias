@@ -1,6 +1,7 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -58,9 +59,13 @@ class ParticipanteAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(p: ParticipanteActividad) {
             val pos = adapterPosition + 1
-            binding.participante.text = pos.toString() + ". " + p.apellidos + ", " + p.nombre
+            binding.participante.text = pos.toString() + ". ${p.apellidos}, ${p.nombre}"
             binding.nif.text = p.nif
-            binding.asisteQr.text = AppDateUtil.dateToString(p.asiste, DateFormats.TIME.format)
+
+            binding.asisteHora.text = "Asistencia: " + AppDateUtil.dateToString(p.asiste, DateFormats.TIME.format)
+            binding.asisteHora.visibility = View.VISIBLE
+            //binding.asisteQr.visibility = View.VISIBLE
+            binding.asisteManual.visibility = View.VISIBLE
         }
     }
 }

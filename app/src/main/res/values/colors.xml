@@ -19,4 +19,7 @@
     <color name="text_light">#8EA0A6</color>
     <color name="dark_orange">#B35919</color>
 
+    <color name="success">#90C52D</color>
+    <color name="error">#FF4D4D</color>
+
 </resources>

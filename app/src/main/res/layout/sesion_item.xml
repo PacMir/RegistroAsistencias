@@ -15,27 +15,23 @@
 
         <TextView
             android:id="@+id/duracion"
-            style="@style/sesion_icons"
+            style="@style/card_icons.mini"
             app:drawableStartCompat="@drawable/ic_time"
             app:layout_constraintEnd_toStartOf="@id/participantes"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/participantes"
-            style="@style/sesion_icons"
+            style="@style/card_icons.mini"
             app:drawableStartCompat="@drawable/ic_person"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/titulo"
+            style="@style/card_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/dark_grey_title"
-            android:textSize="15sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/duracion" />
@@ -46,6 +42,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="1dp"
             android:textColor="@color/text_title"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,33 +50,21 @@
 
         <TextView
             android:id="@+id/responsable"
+            style="@style/card_body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="1dp"
-            android:textColor="@color/dark_grey_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/modalidad" />
 
         <TextView
-            android:id="@+id/inicio"
+            android:id="@+id/horario"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="1dp"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toStartOf="@id/fin"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/responsable" />
-
-        <TextView
-            android:id="@+id/fin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="1dp"
-            android:textAlignment="textEnd"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/inicio"
             app:layout_constraintTop_toBottomOf="@+id/responsable" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

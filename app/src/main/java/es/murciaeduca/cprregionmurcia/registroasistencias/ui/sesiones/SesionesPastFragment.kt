@@ -1,14 +1,16 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.adapters.SesionAdapter
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentSesionesPastBinding
@@ -39,6 +41,10 @@ class SesionesPastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Mostrar barra de navegación
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation).visibility =
+            View.VISIBLE
+
         sesionRV = binding.sesionesPastRV
         sesionRV.layoutManager = LinearLayoutManager(context)
         val adapter = SesionAdapter {
@@ -56,28 +62,20 @@ class SesionesPastFragment : Fragment() {
             }
         }
     }
-
+/*
     // Toolbar
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        val item = menu.findItem(R.id.toolbarSearch)
-        menu.setGroupVisible(item.groupId, true)
+        //val item = menu.findItem(R.id.toolbarSearch)
+        //menu.setGroupVisible(item.groupId, true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.toolbarUpload -> {
-                Toast.makeText(requireActivity(), "Enviar", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.toolbarSearch -> {
-                Toast.makeText(requireActivity(), "Buscar", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+
         }
     }
-
+*/
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

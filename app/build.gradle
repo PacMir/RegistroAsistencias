@@ -86,4 +86,6 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    // code-scanner (based on zxing) not running on camera2 yet
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
 }

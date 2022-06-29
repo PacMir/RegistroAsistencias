@@ -105,9 +105,7 @@ class AuthRegisterFragment : Fragment() {
                         .setTitle(context?.resources?.getString(R.string.auth_verify_title) + " " + email)
                         .setMessage(R.string.auth_verify)
                         .setPositiveButton(R.string.accept) { _, _ ->
-                            val direction =
-                                AuthRegisterFragmentDirections.actionAuthRegisterFragmentToAuthLoginFragment()
-                            findNavController().navigate(direction)
+                            findNavController().popBackStack()
                         }
                         .show()
 
@@ -124,7 +122,7 @@ class AuthRegisterFragment : Fragment() {
 
     // Guardar nombre del usuario en SharedPreferences
     private fun savePreferencesUserName() {
-        val sp = activity?.getSharedPreferences(email, 0)?.edit()
+        val sp = requireActivity().getSharedPreferences(email, 0)?.edit()
         with(sp) {
             this?.putString("user_name", name)
             this?.apply()

@@ -24,13 +24,7 @@
         android:id="@+id/authRegisterFragment"
         android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.auth.AuthRegisterFragment"
         android:label="AuthRegisterFragment"
-        tools:layout="@layout/fragment_auth_register">
-        <action
-            android:id="@+id/action_authRegisterFragment_to_authLoginFragment"
-            app:destination="@id/authLoginFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-    </fragment>
+        tools:layout="@layout/fragment_auth_register"/>
     <activity
         android:id="@+id/homeActivity"
         android:name="es.murciaeduca.cprregionmurcia.registroasistencias.HomeActivity"

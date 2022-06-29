@@ -13,40 +13,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <TextView
-            android:id="@+id/participante"
-            android:layout_width="0dp"
+            android:id="@+id/nif"
+            style="@style/card_body"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/dark_grey_title"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/nif"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="1dp"
-            android:textColor="@color/dark_grey_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/participante" />
-        <TextView
             android:id="@+id/asisteQr"
+            style="@style/card_icons.mini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/asiste_qr"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_qr_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/asisteManual"
+            style="@style/card_icons.mini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/asiste_manual"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_manual"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/participante"
+            style="@style/card_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="1dp"
-            android:textColor="@color/dark_grey_title"
-            app:drawableStartCompat="@drawable/ic_qr_code"
-            android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nif" />
+            app:layout_constraintTop_toBottomOf="@id/nif" />
+
+        <TextView
+            android:id="@+id/asisteHora"
+            style="@style/card_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="1dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/participante" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

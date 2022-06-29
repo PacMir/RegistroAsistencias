@@ -9,6 +9,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.adapters.SesionAdapter
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentSesionesTodayBinding
@@ -40,6 +41,10 @@ class SesionesTodayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Mostrar barra de navegación
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation).visibility =
+            View.VISIBLE
+
         sesionRV = binding.sesionesHoyRV
         sesionRV.layoutManager = LinearLayoutManager(context)
         val adapter = SesionAdapter {
@@ -52,7 +57,7 @@ class SesionesTodayFragment : Fragment() {
         }
         sesionRV.adapter = adapter
         lifecycle.coroutineScope.launch {
-            viewModel.getToday().collect() {
+            viewModel.getToday().collect {
                 adapter.submitList(it)
             }
         }
@@ -61,8 +66,7 @@ class SesionesTodayFragment : Fragment() {
     // Toolbar
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        val item = menu.findItem(R.id.toolbarDownload)
-        item.isVisible = true
+        menu.findItem(R.id.toolbarDownload).isVisible = true
     }
 
     // Evento descarga de datos
