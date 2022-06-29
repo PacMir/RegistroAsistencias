@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.ParticipanteActividad
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ParticipanteItemBinding
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
 
 class ParticipanteAdapter(
     private val onItemClicked: (ParticipanteActividad) -> Unit,
@@ -57,6 +59,8 @@ class ParticipanteAdapter(
         fun bind(p: ParticipanteActividad) {
             val pos = adapterPosition + 1
             binding.participante.text = pos.toString() + ". " + p.apellidos + ", " + p.nombre
+            binding.nif.text = p.nif
+            binding.asisteQr.text = AppDateUtil.dateToString(p.asiste, DateFormats.TIME.format)
         }
     }
 }

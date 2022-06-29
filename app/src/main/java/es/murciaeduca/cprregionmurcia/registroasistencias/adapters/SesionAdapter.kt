@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionActividad
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.SesionItemBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
-import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateUtil
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
 
 class SesionAdapter(
     private val onItemClicked: (SesionActividad) -> Unit
@@ -62,10 +62,10 @@ class SesionAdapter(
             binding.modalidad.text = s.modalidad
             binding.responsable.text = "Director/a: " + s.responsable
             binding.inicio.text =
-                "Comienzo: " + DateUtil.dateToString(s.inicio, DateFormats.TIME.format) + "h"
+                "Comienzo: " + AppDateUtil.dateToString(s.inicio, DateFormats.TIME.format) + "h"
             binding.fin.text =
-                "Finalización: " + DateUtil.dateToString(s.fin, DateFormats.TIME.format) + "h"
-            binding.duracion.text = DateUtil.duration(s.inicio, s.fin)
+                "Finalización: " + AppDateUtil.dateToString(s.fin, DateFormats.TIME.format) + "h"
+            binding.duracion.text = AppDateUtil.duration(s.inicio, s.fin)
         }
     }
 }

@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <TextView
             android:id="@+id/participante"
             android:layout_width="0dp"
@@ -25,6 +26,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nif"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="1dp"
+            android:textColor="@color/dark_grey_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/participante" />
+        <TextView
+            android:id="@+id/asisteQr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="1dp"
+            android:textColor="@color/dark_grey_title"
+            app:drawableStartCompat="@drawable/ic_qr_code"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nif" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

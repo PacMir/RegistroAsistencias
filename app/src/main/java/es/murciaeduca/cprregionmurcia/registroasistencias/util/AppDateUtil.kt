@@ -12,7 +12,7 @@ enum class DateFormats(val format: String) {
     DATE_TEXT("dd MMMM")
 }
 
-object DateUtil {
+object AppDateUtil {
 
     fun currentTimestampDate(): Date {
         return Date(System.currentTimeMillis())

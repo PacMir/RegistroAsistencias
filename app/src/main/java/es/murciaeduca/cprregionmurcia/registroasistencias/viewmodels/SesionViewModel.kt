@@ -8,14 +8,14 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionActividad
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.repo.SesionActividadRepository
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.repo.SesionRepository
-import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateUtil
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 class SesionViewModel : ViewModel() {
     private val saRepository: SesionActividadRepository
     private val sRepository: SesionRepository
-    private val todayDate: Date = DateUtil.currentTimestampDate()
+    private val todayDate: Date = AppDateUtil.currentTimestampDate()
     private val userEmail: String
     private val db = App.getInstance()
 
