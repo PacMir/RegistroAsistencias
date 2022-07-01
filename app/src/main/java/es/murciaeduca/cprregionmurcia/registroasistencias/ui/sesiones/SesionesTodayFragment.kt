@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,24 +48,29 @@ class SesionesTodayFragment : Fragment() {
 
         sesionRV = binding.sesionesHoyRV
         sesionRV.layoutManager = LinearLayoutManager(context)
-        val adapter = SesionAdapter {
+        val adapter = SesionAdapter({
             requireActivity().runOnUiThread {
                 val action = SesionesTodayFragmentDirections
                     .actionSesionesTodayFragmentToAsistenciaFragment(it)
                 view.findNavController().navigate(action)
             }
-        }
+        }, 1)
         sesionRV.adapter = adapter
         lifecycle.coroutineScope.launch {
             viewModel.getToday().collect {
                 adapter.submitList(it)
-              /*  if(it.isEmpty()){
-                    binding.sesionesHoyEmpty.visibility = View.VISIBLE
-                }else{
-                    binding.sesionesHoyEmpty.visibility = View.GONE
-                }*/
             }
         }
+
+        // Observar listado para mostrar una página vacía
+        val emtpySesionesList = Observer<Int> {
+            if(it == 0){
+                binding.sesionesHoyEmpty.visibility = View.VISIBLE
+            }else{
+                binding.sesionesHoyEmpty.visibility = View.GONE
+            }
+        }
+        viewModel.getCountToday().observe(viewLifecycleOwner, emtpySesionesList)
     }
 
     // Toolbar

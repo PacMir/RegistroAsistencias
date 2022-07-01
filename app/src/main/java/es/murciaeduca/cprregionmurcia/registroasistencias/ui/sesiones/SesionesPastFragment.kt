@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.SesionViewM
 import kotlinx.coroutines.launch
 
 class SesionesPastFragment : Fragment() {
+
     private var _binding: FragmentSesionesPastBinding? = null
     private val binding get() = _binding!!
     private lateinit var sesionRV: RecyclerView
@@ -47,25 +49,31 @@ class SesionesPastFragment : Fragment() {
 
         sesionRV = binding.sesionesPastRV
         sesionRV.layoutManager = LinearLayoutManager(context)
-        val adapter = SesionAdapter {
+        val adapter = SesionAdapter({
             requireActivity().runOnUiThread {
                 val action =
                     SesionesPastFragmentDirections.actionSesionesPastFragmentToAsistenciaPastFragment(
                         it)
                 view.findNavController().navigate(action)
             }
-        }
+        }, 0)
         sesionRV.adapter = adapter
         lifecycle.coroutineScope.launch{
             viewModel.getPast().collect {
                 adapter.submitList(it)
-              /*  if(it.isEmpty()){
-                    binding.sesionesPastEmpty.visibility = View.VISIBLE
-                }else{
-                    binding.sesionesPastEmpty.visibility = View.GONE
-                }*/
             }
         }
+
+        // Observar listado para mostrar una página vacía
+        val emtpySesionesList = Observer<Int> {
+            if(it == 0){
+                binding.sesionesPastEmpty.visibility = View.VISIBLE
+            }else{
+                binding.sesionesPastEmpty.visibility = View.GONE
+            }
+        }
+        viewModel.getCountPast().observe(viewLifecycleOwner, emtpySesionesList)
+
     }
 
     override fun onDestroyView() {

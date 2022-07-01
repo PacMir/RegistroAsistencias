@@ -22,11 +22,13 @@ class SesionViewModel : ViewModel() {
      * Sesiones del día de hoy
      */
     fun getToday() = repository.getToday(userEmail, todayStartDate, todayEndDate)
+    fun getCountToday() = repository.getCountToday(userEmail, todayStartDate, todayEndDate)
 
     /**
      * Sesiones anteriores
      */
     fun getPast() = repository.getPast(userEmail, todayDate)
+    fun getCountPast() = repository.getCountPast(userEmail, todayDate)
 
     /**
      * Sesiones pasadas pendientes de enviar (notificación en bottombar)

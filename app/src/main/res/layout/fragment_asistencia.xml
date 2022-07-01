@@ -13,6 +13,7 @@
         android:background="@color/bg_blue_cpr_light"
         android:paddingHorizontal="12dp"
         android:paddingTop="10dp"
+        android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

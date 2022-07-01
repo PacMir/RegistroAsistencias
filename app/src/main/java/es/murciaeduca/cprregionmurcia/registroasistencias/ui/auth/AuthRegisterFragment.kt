@@ -53,10 +53,7 @@ class AuthRegisterFragment : Fragment() {
             if (!ConnUtil.checkNetwork(requireContext())) {
                 Snackbar.make(requireView(), R.string.auth_connection_error, Snackbar.LENGTH_LONG)
                     .show()
-                return@setOnClickListener
-            }
-
-            if (!isEmptyFields(it) && checkPasswordField(it)) {
+            } else if (!isEmptyFields(it) && checkPasswordField(it)) {
                 createAccount(it)
             }
         }

@@ -40,6 +40,14 @@ interface SesionDao {
     )
     fun getToday(user_email: String, start_date: Long, end_date: Long): Flow<List<SesionActividad>>
 
+    @Transaction
+    @Query("SELECT COUNT(*) " +
+            "FROM sesiones s " +
+            "INNER JOIN actividades a ON s.act_codigo = a.act_codigo " +
+            "WHERE a.user_email = :user_email AND s.ses_inicio BETWEEN :start_date AND :end_date " +
+            "ORDER BY s.ses_inicio ASC")
+    fun getCountToday(user_email: String, start_date: Long, end_date: Long): LiveData<Int>
+
     /**
      *  Sesiones pasadas
      */
@@ -58,12 +66,19 @@ interface SesionDao {
     )
     fun getPast(user_email: String, now: Date): Flow<List<SesionActividad>>
 
+    @Transaction
+    @Query("SELECT COUNT(*) " +
+            "FROM sesiones s " +
+            "INNER JOIN actividades a ON s.act_codigo = a.act_codigo " +
+            "WHERE a.user_email = :user_email AND s.ses_fin < :now " +
+            "ORDER BY s.ses_inicio ASC")
+    fun getCountPast(user_email: String, now: Date): LiveData<Int>
+
     /**
      *  Sesiones pasadas pendientes de envío para el badge de notificaciones
      */
-    @Query("SELECT COUNT(*) FROM sesiones s INNER JOIN actividades a ON s.act_codigo = a.act_codigo WHERE a.user_email = :user_email AND s.ses_fin < :now")
-    fun getNotSent(user_email: String, now: Date) : LiveData<Int>
-
+    @Query("SELECT COUNT(*) FROM sesiones s INNER JOIN actividades a ON s.act_codigo = a.act_codigo WHERE a.user_email = :user_email AND s.ses_fin < :now AND s.ses_carga_marca_temporal IS NULL")
+    fun getNotSent(user_email: String, now: Date): LiveData<Int>
 
     /**
      * TODO A falta de implementar el envío de datos

@@ -12,7 +12,9 @@ class SesionRepository(private val dao: SesionDao) {
      * Listados de sesiones del día y anteriores
      */
     fun getPast(email: String, now: Date) = dao.getPast(email, now)
+    fun getCountPast(email: String, now: Date) = dao.getCountPast(email, now)
     fun getToday(email: String, start: Long, end: Long) = dao.getToday(email, start, end)
+    fun getCountToday(email: String, start: Long, end: Long) = dao.getCountToday(email, start, end)
 
     /**
      * Live data de sesiones pasadas pendientes de enviar

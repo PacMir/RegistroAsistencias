@@ -1,13 +1,11 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.adapters
 
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.SesionActividad
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ItemRecyclerSesionBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
@@ -15,6 +13,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
 
 class SesionAdapter(
     private val onItemClicked: (SesionActividad) -> Unit,
+    private val mode: Int,
 ) : ListAdapter<SesionActividad, SesionAdapter.ViewHolder>(DiffCallback) {
 
     companion object {
@@ -41,8 +40,7 @@ class SesionAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
-        )
+            ), mode)
 
         viewHolder.itemView.setOnClickListener {
             val position = viewHolder.adapterPosition
@@ -58,6 +56,7 @@ class SesionAdapter(
 
     class ViewHolder(
         private var binding: ItemRecyclerSesionBinding,
+        private val mode: Int,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(s: SesionActividad) {
             binding.fechaTitulo.text = AppDateUtil.generateDateInfo(s.inicio, s.fin)
@@ -67,16 +66,24 @@ class SesionAdapter(
             binding.responsable.text = "Director/a: ${s.responsable}"
             binding.duracion.text = AppDateUtil.duration(s.inicio, s.fin)
 
-            if (s.upload == null) {
-                binding.iconCloudDone.visibility = View.GONE
-                binding.iconCloudOff.visibility = View.VISIBLE
-                binding.iconCloudOff.text = "Datos no enviados"
+            // Sesiones hoy. TODO arreglar con databinding
+            if (mode == 1) {
+                binding.iconCloudDone.visibility = View.INVISIBLE
+                binding.iconCloudOff.visibility = View.INVISIBLE
 
             } else {
-                binding.iconCloudOff.visibility = View.GONE
-                binding.iconCloudDone.visibility = View.VISIBLE
-                binding.iconCloudDone.text =
-                    AppDateUtil.dateToString(s.upload, DateFormats.DATE_TIME.format)
+
+                if (s.upload == null) {
+                    binding.iconCloudDone.visibility = View.INVISIBLE
+                    binding.iconCloudOff.visibility = View.VISIBLE
+                    binding.iconCloudOff.text = "Datos no enviados"
+
+                } else {
+                    binding.iconCloudOff.visibility = View.INVISIBLE
+                    binding.iconCloudDone.visibility = View.VISIBLE
+                    binding.iconCloudDone.text =
+                        AppDateUtil.dateToString(s.upload, DateFormats.DATE_TIME.format)
+                }
             }
         }
     }

@@ -21,6 +21,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.ParticipanteViewModel
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.SesionViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class AsistenciaPastFragment : Fragment() {
@@ -115,7 +116,8 @@ class AsistenciaPastFragment : Fragment() {
 
         } else {
             binding.iconCloudDone.visibility = View.VISIBLE
-            binding.iconCloudDone.text = AppDateUtil.dateToString(args.sesion.upload, DateFormats.DATE_TIME.format)
+            binding.iconCloudDone.text =
+                AppDateUtil.dateToString(args.sesion.upload, DateFormats.DATE_TIME.format)
         }
 
     }
@@ -141,6 +143,18 @@ class AsistenciaPastFragment : Fragment() {
 
                     } else {
                         sesViewModel.send(args.sesion.id)
+
+                        binding.iconCloudOff.visibility = View.GONE
+                        binding.iconCloudDone.visibility = View.VISIBLE
+                        binding.iconCloudDone.text =
+                            AppDateUtil.dateToString(Date(System.currentTimeMillis()),
+                                DateFormats.DATE_TIME.format)
+
+                        Snackbar.make(requireView(),
+                            getString(R.string.data_uploaded),
+                            Snackbar.LENGTH_LONG).show()
+
+                        item.isVisible = false
                     }
 
                 } catch (e: Exception) {

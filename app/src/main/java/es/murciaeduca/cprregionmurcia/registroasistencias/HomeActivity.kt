@@ -46,9 +46,9 @@ class HomeActivity : AppCompatActivity() {
         // Observar el número de sesiones pasadas pendientes de enviar
         val item = binding.bottomNavigation.menu.findItem(R.id.sesionesPastFragment).itemId
         val badge = binding.bottomNavigation.getOrCreateBadge(item)
-        badge.isVisible = true
         val badgeObserver = Observer<Int> {
             badge.number = it
+            badge.isVisible = it > 0
         }
         viewModel.getNotSent().observe(this, badgeObserver)
 

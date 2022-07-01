@@ -14,6 +14,7 @@
         android:background="@color/bg_blue_cpr_light"
         android:paddingHorizontal="12dp"
         android:paddingTop="10dp"
+        android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -58,16 +59,16 @@
         <TextView
             android:id="@+id/iconCloudDone"
             style="@style/card_icons.icon_info"
-            app:drawableStartCompat="@drawable/ic_cloud_done"
             android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_cloud_done"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actSubtituloPast" />
 
         <TextView
             android:id="@+id/iconCloudOff"
             style="@style/card_icons.icon_info"
-            app:drawableStartCompat="@drawable/ic_cloud_off"
             android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_cloud_off"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actSubtituloPast" />
 

@@ -72,4 +72,5 @@
     <!-- Listas  -->
     <string name="no_content_image_description">Sin contenido</string>
     <string name="no_content">No hay sesiones en el dispositivo</string>
+    <string name="data_uploaded">Datos enviados</string>
 </resources>

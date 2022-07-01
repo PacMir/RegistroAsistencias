@@ -17,6 +17,7 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.adapters.ParticipanteA
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.ParticipanteAsistencia
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentAsistenciaBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.AsistenciaViewModel
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.ParticipanteViewModel
 import kotlinx.coroutines.launch
@@ -98,10 +99,11 @@ class AsistenciaFragment : Fragment() {
 
             // Se ha marcado asistencia
         } else {
+            val msg = getString(R.string.attendance_set) + " " + AppDateUtil.dateToString(p.asistencia, DateFormats.TIME.format) + "h."
             MaterialAlertDialogBuilder(requireContext())
                 .setIcon(R.drawable.cpr_logo)
                 .setTitle("${p.nombre} ${p.apellidos}")
-                .setMessage(R.string.attendance_set)
+                .setMessage(msg)
                 .setPositiveButton(R.string.attendance_cancel_button) { _, _ ->
                     asisViewModel.deleteById(args.sesion.id, p.id)
                 }
