@@ -10,6 +10,13 @@
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
     <item
+        android:id="@+id/toolbarUpload"
+        android:icon="@drawable/ic_cloud_upload"
+        android:title="@string/toolbar_upload"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
         android:id="@+id/toolbarScanQr"
         android:icon="@drawable/ic_qr_scanner"
         android:title="@string/toolbar_qr_scan"
@@ -27,6 +34,7 @@
         android:title=""
         app:showAsAction="always">
         <menu>
+            <!--
             <item
                 android:id="@+id/menuHelp"
                 android:icon="@drawable/ic_help"
@@ -37,6 +45,7 @@
                 android:icon="@drawable/ic_settings"
                 android:orderInCategory="200"
                 android:title="@string/toolbar_of_settings" />
+                -->
             <item
                 android:id="@+id/menuLogOut"
                 android:icon="@drawable/ic_exit"

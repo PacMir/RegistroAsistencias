@@ -2,6 +2,7 @@
     <string name="app_name">Registro de asistencias</string>
     <string name="app_logo_content_description">cpr_logo</string>
     <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
 
     <!-- Login -->
     <string name="comunidad_autonoma">Región de Murcia</string>
@@ -54,7 +55,21 @@
     <string name="permission_camera_title">Acceso a la cámara</string>
     <string name="qr_info">Pulse el botón y sitúe el código QR dentro del marco</string>
     <string name="qr_wrong_format">Formato no válido</string>
-    <string name="qr_already_checked">Ya existe una asistencia del/la usuario/a:</string>
+    <string name="qr_already_checked">Ya existe una asistencia del/la usuario/a</string>
     <string name="qr_checked">Asistencia registrada</string>
     <string name="qr_not_allowed">No es posible registrar la asistencia</string>
+    <string name="fab_button">FAB</string>
+
+    <!-- Asistencia -->
+    <string name="attendance_not_set">No hay asistencia registrada</string>
+    <string name="attendance_set_button">Marcar asistencia</string>
+    <string name="attendance_set">Asistencia registrada a las&#160;</string>
+    <string name="attendance_cancel_button">Anular asistencia</string>
+    <string name="attendance_qr_method">&#160;con escáner QR</string>
+    <string name="attendance_manual_method">&#160;manualmente</string>
+    <string name="attendance_not_sent">Datos no enviados</string>
+
+    <!-- Listas  -->
+    <string name="no_content_image_description">Sin contenido</string>
+    <string name="no_content">No hay sesiones en el dispositivo</string>
 </resources>

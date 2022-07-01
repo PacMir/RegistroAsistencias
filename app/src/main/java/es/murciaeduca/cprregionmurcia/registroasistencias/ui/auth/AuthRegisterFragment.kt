@@ -102,6 +102,7 @@ class AuthRegisterFragment : Fragment() {
                 // Mostrar mensaje de validación y redirección a login
                 if (it.isSuccessful) {
                     MaterialAlertDialogBuilder(requireContext())
+                        .setIcon(R.drawable.cpr_logo)
                         .setTitle(context?.resources?.getString(R.string.auth_verify_title) + " " + email)
                         .setMessage(R.string.auth_verify)
                         .setPositiveButton(R.string.accept) { _, _ ->

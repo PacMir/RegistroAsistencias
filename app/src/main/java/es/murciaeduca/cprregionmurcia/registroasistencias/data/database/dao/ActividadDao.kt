@@ -6,17 +6,17 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities
 @Dao
 interface ActividadDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(actividad: Actividad)
+    suspend fun save(actividad: Actividad)
 
     @Update
-    fun update(actividad: Actividad)
+    suspend fun update(actividad: Actividad)
 
     @Delete
-    fun delete(actividad: Actividad)
+    suspend fun delete(actividad: Actividad)
 
     @Query("SELECT * FROM actividades WHERE act_codigo = :codigo")
-    fun getById(codigo: String): Actividad
+    suspend fun getById(codigo: String): Actividad
 
     @Query("DELETE FROM actividades WHERE user_email = :email")
-    fun deleteAllFromUser(email: String)
+    suspend fun deleteAllFromUser(email: String)
 }

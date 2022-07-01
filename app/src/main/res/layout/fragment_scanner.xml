@@ -46,7 +46,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="30dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/round_button"
+        android:background="@drawable/qr_round_button"
         android:contentDescription="@string/accept"
         android:padding="16dp"
         android:scaleType="fitCenter"

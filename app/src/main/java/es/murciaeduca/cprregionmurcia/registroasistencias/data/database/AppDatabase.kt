@@ -17,12 +17,10 @@ import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateConverter
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sesionDao(): SesionDao
-    abstract fun actividadDao(): ActividadDao
-    abstract fun modalidadesDao(): ModalidadDao
+    //abstract fun actividadDao(): ActividadDao
+    //abstract fun modalidadesDao(): ModalidadDao
     abstract fun participanteDao(): ParticipanteDao
     abstract fun asistenciaDao(): AsistenciaDao
-    abstract fun sesionActividadDao(): SesionActividadDao
-    abstract fun participanteActividadDao(): ParticipanteActividadDao
 
     companion object {
 
@@ -45,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
                     // Prepropagar con Base de datos
                     .createFromAsset("database/$DATABASE_NAME.db")
                     // No migraciones
-                    //.fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration()
                     // Prepropagar modalidades
                     // .addCallback(ModalidadesPopulator())
                     .build()

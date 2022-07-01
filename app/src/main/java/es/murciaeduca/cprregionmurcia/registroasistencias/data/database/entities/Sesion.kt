@@ -6,8 +6,8 @@ import java.util.*
 
 @Entity(
     tableName = "sesiones",
-    primaryKeys = ["act_codigo", "ses_inicio"],
     indices = [
+        Index(name = "index_sesiones_candidata", value = ["act_codigo", "ses_inicio"], unique = true),
         Index("act_codigo"),
         Index("ses_inicio"),
         Index("ses_fin"),
@@ -23,6 +23,9 @@ import java.util.*
     ],
 )
 data class Sesion(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ses_id")
+    val id: Long,
     @NonNull @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
     @NonNull @ColumnInfo(name = "ses_inicio")
@@ -35,7 +38,7 @@ data class Sesion(
     val observaciones: String?,
 ) {
     override fun toString(): String {
-        return "Sesion(actividad_codigo='$actividad_codigo', inicio=$inicio, fin=$fin, carga_marca_temporal=$carga_marca_temporal, observaciones=$observaciones)"
+        return "Sesion(id=$id, actividad_codigo='$actividad_codigo', inicio=$inicio, fin=$fin, carga_marca_temporal=$carga_marca_temporal, observaciones=$observaciones)"
     }
 }
 

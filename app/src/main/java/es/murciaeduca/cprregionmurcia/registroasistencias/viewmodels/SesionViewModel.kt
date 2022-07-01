@@ -1,39 +1,48 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import es.murciaeduca.cprregionmurcia.registroasistencias.application.App
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.Sesion
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionActividad
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.repo.SesionActividadRepository
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.repo.SesionRepository
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.util.*
 
 class SesionViewModel : ViewModel() {
-    private val saRepository: SesionActividadRepository
-    private val sRepository: SesionRepository
-    private val todayDate: Date = AppDateUtil.currentTimestampDate()
-    private val userEmail: String
-    private val db = App.getInstance()
+    private val repository = SesionRepository(App.getInstance().sesionDao())
+    private val todayDate : Date = Date(System.currentTimeMillis())
+    private val todayStartDate: Long = AppDateUtil.getLongFromToday(null)
+    private val todayEndDate: Long = AppDateUtil.getLongFromToday(1)
+    private val userEmail: String = Firebase.auth.currentUser!!.email.toString()
 
-    init {
-        saRepository = SesionActividadRepository(db.sesionActividadDao())
-        sRepository = SesionRepository(db.sesionDao())
-        userEmail = Firebase.auth.currentUser!!.email.toString()
-    }
+    /**
+     * Sesiones del día de hoy
+     */
+    fun getToday() = repository.getToday(userEmail, todayStartDate, todayEndDate)
 
-    // Sesiones del día de hoy
-    fun getToday(): Flow<List<SesionActividad>> = saRepository.getToday(userEmail, todayDate)
+    /**
+     * Sesiones anteriores
+     */
+    fun getPast() = repository.getPast(userEmail, todayDate)
 
-    // Sesiones anteriores
-    fun getPast(): Flow<List<SesionActividad>> = saRepository.getPast(userEmail, todayDate)
+    /**
+     * Sesiones pasadas pendientes de enviar (notificación en bottombar)
+     */
+    fun getNotSent() = repository.getNotSent(userEmail, todayDate)
 
-    fun insertToday() {
+    /**
+     * TODO Inserción a falta de implementar la descarga de datos
+     */
+    fun insertToday() = viewModelScope.launch {
         val now = Date()
         val now2hours = now.time.plus(7200000)
-        sRepository.save(Sesion("0308.22", now, Date(now2hours), null, null))
+        repository.save(Sesion(0, "0308.22", now, Date(now2hours), null, null))
+    }
+
+    fun send(sesion_id: Long) = viewModelScope.launch {
+        repository.send(sesion_id, todayDate)
     }
 }

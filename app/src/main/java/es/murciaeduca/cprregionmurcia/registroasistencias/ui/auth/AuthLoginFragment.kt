@@ -60,7 +60,7 @@ class AuthLoginFragment : Fragment() {
     }
 
     // Iniciar sesión
-    fun logIn(view: View) {
+    private fun logIn(view: View) {
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -70,6 +70,7 @@ class AuthLoginFragment : Fragment() {
                     // Usuario pendiente de verificación
                     if (!user.isEmailVerified) {
                         MaterialAlertDialogBuilder(requireContext())
+                            .setIcon(R.drawable.cpr_logo)
                             .setTitle(R.string.auth_email_verification_title)
                             .setMessage(R.string.auth_email_verification)
                             .setNeutralButton(R.string.accept, null)

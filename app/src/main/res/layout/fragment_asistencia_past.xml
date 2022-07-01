@@ -6,24 +6,90 @@
     android:layout_height="match_parent"
     tools:context=".ui.participantes.AsistenciaPastFragment">
 
-    <TextView
-        android:id="@+id/actTitulo"
-        style="@style/card_header"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/actTituloWrPast"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="2"
+        android:background="@color/bg_blue_cpr_light"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/actTituloPast"
+            style="@style/card_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/actSubtituloPast"
+            style="@style/card_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:paddingBottom="6dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actTituloPast" />
+
+        <TextView
+            android:id="@+id/participantesPastTotal"
+            style="@style/card_icons.icon_info"
+            app:drawableStartCompat="@drawable/ic_person"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actSubtituloPast" />
+
+        <TextView
+            android:id="@+id/participantesPastAsisten"
+            style="@style/card_icons.icon_info"
+            app:drawableStartCompat="@drawable/ic_check"
+            app:layout_constraintStart_toEndOf="@id/participantesPastTotal"
+            app:layout_constraintTop_toBottomOf="@id/actSubtituloPast" />
+
+        <TextView
+            android:id="@+id/iconCloudDone"
+            style="@style/card_icons.icon_info"
+            app:drawableStartCompat="@drawable/ic_cloud_done"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actSubtituloPast" />
+
+        <TextView
+            android:id="@+id/iconCloudOff"
+            style="@style/card_icons.icon_info"
+            app:drawableStartCompat="@drawable/ic_cloud_off"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actSubtituloPast" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actTituloWrPast" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/participantesRV"
+        android:id="@+id/participantesPastRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="1dp"
+        android:paddingHorizontal="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/actTitulo" />
+        app:layout_constraintTop_toBottomOf="@id/actTituloWrPast" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

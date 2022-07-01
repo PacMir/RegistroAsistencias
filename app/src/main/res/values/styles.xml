@@ -15,24 +15,23 @@
 
     <!-- Cards -->
     <style name="card_header" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/text_title</item>
+        <item name="android:textColor">@color/bg_blue_cpr_dark</item>
         <item name="android:textSize">18sp</item>
         <item name="android:layout_marginTop">6dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="card_title">
-        <item name="android:paddingVertical" tools:ignore="NewApi">1dp</item>
+        <item name="android:paddingVertical" tools:ignore="NewApi">2dp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">2</item>
         <item name="android:textColor">@color/dark_grey_title</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="card_body">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:paddingVertical" tools:ignore="NewApi">1dp</item>
         <item name="android:textColor">@color/dark_grey_title</item>
     </style>
@@ -48,7 +47,14 @@
 
     <style name="card_icons.mini">
         <item name="android:textColor">@color/dark_grey_title</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="card_icons.icon_info">
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- Material AlertDialog -->
@@ -59,15 +65,18 @@
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/dark_orange</item>
+        <item name="android:textColor">@color/dark_grey_title</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/dark_orange</item>
+        <item name="android:textColor">@color/bg_blue_cpr_dark</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/dark_orange</item>
+        <item name="android:textColor">@color/bg_blue_cpr_dark</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Material Toolbar Menu Overflow -->

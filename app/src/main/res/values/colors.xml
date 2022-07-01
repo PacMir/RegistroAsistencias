@@ -10,9 +10,11 @@
 
     <color name="dark_grey">#767676</color>
     <color name="dark_grey_title">#575757</color>
-    <color name="bg_grey">#F7F7F7</color>
+    <color name="bg_grey">#F0F0F0</color>
     <!--<color name="bg_blue_cpr">#6c8cc6</color>-->
     <color name="bg_blue_cpr">#577BBD</color>
+    <color name="bg_blue_cpr_light">#EEF1F8</color>
+    <color name="bg_blue_cpr_dark">#476FB8</color>
 
     <color name="text_title">#6f8690</color>
     <color name="text_dark">#262B32</color>

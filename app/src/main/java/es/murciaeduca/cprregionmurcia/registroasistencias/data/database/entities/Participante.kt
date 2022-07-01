@@ -5,8 +5,8 @@ import androidx.room.*
 
 @Entity(
     tableName = "participantes",
-    primaryKeys = ["act_codigo", "part_nif"],
     indices = [
+        Index(name = "index_participantes_candidata", value = ["act_codigo", "part_nif"], unique = true),
         Index(name="index_participantes_nombre_largo", value = ["part_nombre", "part_apellidos"]),
         Index("act_codigo"),
         Index("part_nif")
@@ -21,6 +21,9 @@ import androidx.room.*
     ]
 )
 data class Participante(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "part_id")
+    val id: Long,
     @NonNull @ColumnInfo(name = "act_codigo")
     val actividad_codigo: String,
     @NonNull @ColumnInfo(name = "part_nif")
@@ -33,6 +36,6 @@ data class Participante(
     val email: String
 ) {
     override fun toString(): String {
-        return "Participante(actividad_codigo='$actividad_codigo', nif='$nif', nombre='$nombre', apellidos='$apellidos', email='$email')"
+        return "Participante(id=$id, actividad_codigo='$actividad_codigo', nif='$nif', nombre='$nombre', apellidos='$apellidos', email='$email')"
     }
 }

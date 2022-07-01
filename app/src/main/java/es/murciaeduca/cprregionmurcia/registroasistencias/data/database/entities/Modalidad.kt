@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "modalidades")
 data class Modalidad(
-    @PrimaryKey
-    @NonNull @ColumnInfo(name = "mod_codigo")
+    @PrimaryKey @ColumnInfo(name = "mod_codigo")
     val codigo: String,
     @NonNull @ColumnInfo(name = "mod_denominacion")
     val denominacion: String,

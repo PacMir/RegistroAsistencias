@@ -1,14 +1,17 @@
 package es.murciaeduca.cprregionmurcia.registroasistencias.adapters
 
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.SesionActividad
-import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.SesionItemBinding
-import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
+import es.murciaeduca.cprregionmurcia.registroasistencias.R
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.SesionActividad
+import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ItemRecyclerSesionBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
 
 class SesionAdapter(
     private val onItemClicked: (SesionActividad) -> Unit,
@@ -20,7 +23,7 @@ class SesionAdapter(
                 oldItem: SesionActividad,
                 newItem: SesionActividad,
             ): Boolean {
-                return (oldItem.codigo == newItem.codigo && oldItem.inicio == newItem.inicio)
+                return (oldItem.id == newItem.id)
             }
 
             override fun areContentsTheSame(
@@ -34,7 +37,7 @@ class SesionAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewHolder = ViewHolder(
-            SesionItemBinding.inflate(
+            ItemRecyclerSesionBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -54,19 +57,27 @@ class SesionAdapter(
     }
 
     class ViewHolder(
-        private var binding: SesionItemBinding,
+        private var binding: ItemRecyclerSesionBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(s: SesionActividad) {
-            val horario = "Horario: de " + AppDateUtil.dateToString(s.inicio,
-                DateFormats.TIME.format) + "h" + " a " + AppDateUtil.dateToString(s.fin,
-                DateFormats.TIME.format) + "h"
-
+            binding.fechaTitulo.text = AppDateUtil.generateDateInfo(s.inicio, s.fin)
             binding.titulo.text = s.codigo + " " + s.titulo
-            binding.participantes.text = 23.toString()
+            binding.participantes.text = "${s.num_asisten}/${s.num_participantes}"
             binding.modalidad.text = s.modalidad
             binding.responsable.text = "Director/a: ${s.responsable}"
-            binding.horario.text = horario
             binding.duracion.text = AppDateUtil.duration(s.inicio, s.fin)
+
+            if (s.upload == null) {
+                binding.iconCloudDone.visibility = View.GONE
+                binding.iconCloudOff.visibility = View.VISIBLE
+                binding.iconCloudOff.text = "Datos no enviados"
+
+            } else {
+                binding.iconCloudOff.visibility = View.GONE
+                binding.iconCloudDone.visibility = View.VISIBLE
+                binding.iconCloudDone.text =
+                    AppDateUtil.dateToString(s.upload, DateFormats.DATE_TIME.format)
+            }
         }
     }
 }

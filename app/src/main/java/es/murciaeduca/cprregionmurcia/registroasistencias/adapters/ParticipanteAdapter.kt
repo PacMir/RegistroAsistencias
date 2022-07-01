@@ -6,27 +6,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.ParticipanteActividad
-import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ParticipanteItemBinding
-import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.ParticipanteAsistencia
+import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.ItemRecyclerParticipanteBinding
 import es.murciaeduca.cprregionmurcia.registroasistencias.util.AppDateUtil
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.DateFormats
 
 class ParticipanteAdapter(
-    private val onItemClicked: (ParticipanteActividad) -> Unit,
-) : ListAdapter<ParticipanteActividad, ParticipanteAdapter.ViewHolder>(DiffCallback) {
+    private val onItemClicked: (ParticipanteAsistencia) -> Unit,
+) : ListAdapter<ParticipanteAsistencia, ParticipanteAdapter.ViewHolder>(DiffCallback) {
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<ParticipanteActividad>() {
+        private val DiffCallback = object : DiffUtil.ItemCallback<ParticipanteAsistencia>() {
             override fun areItemsTheSame(
-                oldItem: ParticipanteActividad,
-                newItem: ParticipanteActividad,
+                oldItem: ParticipanteAsistencia,
+                newItem: ParticipanteAsistencia,
             ): Boolean {
                 return (oldItem.actividad_codigo == newItem.actividad_codigo && oldItem.nif == oldItem.nif)
             }
 
             override fun areContentsTheSame(
-                oldItem: ParticipanteActividad,
-                newItem: ParticipanteActividad,
+                oldItem: ParticipanteAsistencia,
+                newItem: ParticipanteAsistencia,
             ): Boolean {
                 return oldItem == newItem
             }
@@ -35,7 +35,7 @@ class ParticipanteAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewHolder = ViewHolder(
-            ParticipanteItemBinding.inflate(
+            ItemRecyclerParticipanteBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -54,18 +54,33 @@ class ParticipanteAdapter(
         holder.bind(getItem(position))
     }
 
+    // TODO Implementar databinding
     class ViewHolder(
-        private var binding: ParticipanteItemBinding,
+        private var binding: ItemRecyclerParticipanteBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(p: ParticipanteActividad) {
+        fun bind(p: ParticipanteAsistencia) {
             val pos = adapterPosition + 1
+
             binding.participante.text = pos.toString() + ". ${p.apellidos}, ${p.nombre}"
             binding.nif.text = p.nif
 
-            binding.asisteHora.text = "Asistencia: " + AppDateUtil.dateToString(p.asiste, DateFormats.TIME.format)
-            binding.asisteHora.visibility = View.VISIBLE
-            //binding.asisteQr.visibility = View.VISIBLE
-            binding.asisteManual.visibility = View.VISIBLE
+            // Ocultar sección de asistencia
+            binding.asisteHora.visibility = View.INVISIBLE
+            binding.asisteQr.visibility = View.INVISIBLE
+            binding.asisteManual.visibility = View.INVISIBLE
+
+            // Mostrar hora de asistencia y modo de registro
+            if (p.asistencia != null) {
+                binding.asisteHora.text =
+                    "Asiste: " + AppDateUtil.dateToString(p.asistencia, DateFormats.TIME.format) + "h"
+                binding.asisteHora.visibility = View.VISIBLE
+
+                if (p.tipo_registro == 1) {
+                    binding.asisteQr.visibility = View.VISIBLE
+                } else {
+                    binding.asisteManual.visibility = View.VISIBLE
+                }
+            }
         }
     }
 }

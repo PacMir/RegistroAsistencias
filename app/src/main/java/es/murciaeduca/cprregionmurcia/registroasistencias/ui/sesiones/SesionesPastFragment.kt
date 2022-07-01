@@ -48,34 +48,26 @@ class SesionesPastFragment : Fragment() {
         sesionRV = binding.sesionesPastRV
         sesionRV.layoutManager = LinearLayoutManager(context)
         val adapter = SesionAdapter {
-            val action =
-                SesionesPastFragmentDirections.actionSesionesPastFragmentToAsistenciaPastFragment(
-                    actCodigo = it.codigo,
-                    sesInicio = it.inicio.time
-                )
-            view.findNavController().navigate(action)
+            requireActivity().runOnUiThread {
+                val action =
+                    SesionesPastFragmentDirections.actionSesionesPastFragmentToAsistenciaPastFragment(
+                        it)
+                view.findNavController().navigate(action)
+            }
         }
         sesionRV.adapter = adapter
         lifecycle.coroutineScope.launch{
             viewModel.getPast().collect {
                 adapter.submitList(it)
+              /*  if(it.isEmpty()){
+                    binding.sesionesPastEmpty.visibility = View.VISIBLE
+                }else{
+                    binding.sesionesPastEmpty.visibility = View.GONE
+                }*/
             }
         }
     }
-/*
-    // Toolbar
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        //val item = menu.findItem(R.id.toolbarSearch)
-        //menu.setGroupVisible(item.groupId, true)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-
-        }
-    }
-*/
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

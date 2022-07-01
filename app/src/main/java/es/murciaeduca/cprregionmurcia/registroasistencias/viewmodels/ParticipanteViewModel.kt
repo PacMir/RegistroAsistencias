@@ -2,18 +2,21 @@ package es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels
 
 import androidx.lifecycle.ViewModel
 import es.murciaeduca.cprregionmurcia.registroasistencias.application.App
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.ParticipanteActividad
-import es.murciaeduca.cprregionmurcia.registroasistencias.data.repo.ParticipanteActividadRepository
-import kotlinx.coroutines.flow.Flow
+import es.murciaeduca.cprregionmurcia.registroasistencias.data.repo.ParticipanteRepository
 import java.util.*
 
 class ParticipanteViewModel : ViewModel() {
-    private val paRepository: ParticipanteActividadRepository
-    private val db = App.getInstance()
+    private val repository = ParticipanteRepository(App.getInstance().participanteDao())
+    private val todayDate = Date(System.currentTimeMillis())
 
-    init{
-        paRepository = ParticipanteActividadRepository(db.participanteActividadDao())
-    }
+    /**
+     * Listado de Participantes de una actividad indicando asistencia
+     */
+    fun getAllWithAsistencia(act_codigo: String, ses_id: Long) =
+        repository.getAllWithAsistencia(act_codigo, ses_id)
 
-    fun getAllInActividad(act_codigo: String, ses_inicio: Date) : Flow<List<ParticipanteActividad>> = paRepository.getAllInActividad(act_codigo, ses_inicio)
+    /**
+     *  Comprueba un participante
+     */
+    fun getWithAsistencia(act_codigo: String, part_nif: String, sesion_id: Long) = repository.getWithAsistencia(act_codigo, part_nif, sesion_id, todayDate)
 }

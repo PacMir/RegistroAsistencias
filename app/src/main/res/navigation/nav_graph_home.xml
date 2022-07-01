@@ -31,12 +31,14 @@
         android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.participantes.AsistenciaFragment"
         android:label="Asistencia"
         tools:layout="@layout/fragment_asistencia">
+        <action
+            android:id="@+id/action_asistenciaFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <argument
-            android:name="actCodigo"
-            app:argType="string" />
-        <argument
-            android:name="sesInicio"
-            app:argType="long" />
+            android:name="sesion"
+            app:argType="es.murciaeduca.cprregionmurcia.registroasistencias.data.database.SesionActividad" />
     </fragment>
     <fragment
         android:id="@+id/asistenciaPastFragment"
@@ -44,18 +46,16 @@
         android:label="Asistencia"
         tools:layout="@layout/fragment_asistencia_past">
         <argument
-            android:name="actCodigo"
-            app:argType="string" />
-        <argument
-            android:name="sesInicio"
-            app:argType="long" />
-        <action
-            android:id="@+id/action_asistenciaPastFragment_to_scannerFragment"
-            app:destination="@id/scannerFragment" />
+            android:name="sesion"
+            app:argType="es.murciaeduca.cprregionmurcia.registroasistencias.data.database.SesionActividad" />
     </fragment>
     <fragment
         android:id="@+id/scannerFragment"
         android:name="es.murciaeduca.cprregionmurcia.registroasistencias.ui.participantes.ScannerFragment"
         android:label="Escáner QR"
-        tools:layout="@layout/fragment_scanner" />
+        tools:layout="@layout/fragment_scanner" >
+        <argument
+            android:name="sesionId"
+            app:argType="long" />
+    </fragment>
 </navigation>

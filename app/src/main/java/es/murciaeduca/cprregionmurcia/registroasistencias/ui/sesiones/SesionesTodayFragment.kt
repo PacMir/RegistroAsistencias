@@ -2,7 +2,6 @@ package es.murciaeduca.cprregionmurcia.registroasistencias.ui.sesiones
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
@@ -10,11 +9,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.adapters.SesionAdapter
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentSesionesTodayBinding
+import es.murciaeduca.cprregionmurcia.registroasistencias.util.ConnUtil
 import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.SesionViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SesionesTodayFragment : Fragment() {
@@ -48,17 +48,21 @@ class SesionesTodayFragment : Fragment() {
         sesionRV = binding.sesionesHoyRV
         sesionRV.layoutManager = LinearLayoutManager(context)
         val adapter = SesionAdapter {
-            val action = SesionesTodayFragmentDirections
-                .actionSesionesTodayFragmentToAsistenciaFragment(
-                    actCodigo = it.codigo,
-                    sesInicio = it.inicio.time
-                )
-            view.findNavController().navigate(action)
+            requireActivity().runOnUiThread {
+                val action = SesionesTodayFragmentDirections
+                    .actionSesionesTodayFragmentToAsistenciaFragment(it)
+                view.findNavController().navigate(action)
+            }
         }
         sesionRV.adapter = adapter
         lifecycle.coroutineScope.launch {
             viewModel.getToday().collect {
                 adapter.submitList(it)
+              /*  if(it.isEmpty()){
+                    binding.sesionesHoyEmpty.visibility = View.VISIBLE
+                }else{
+                    binding.sesionesHoyEmpty.visibility = View.GONE
+                }*/
             }
         }
     }
@@ -74,13 +78,15 @@ class SesionesTodayFragment : Fragment() {
         return when (item.itemId) {
             R.id.toolbarDownload -> {
                 try {
-                    lifecycle.coroutineScope.launch(Dispatchers.IO) {
+                    // Comprobar conexión
+                    if (!ConnUtil.checkNetwork(requireContext())) {
+                        Snackbar.make(requireView(), R.string.auth_connection_error, Snackbar.LENGTH_LONG).show()
+                    }else {
                         viewModel.insertToday()
                     }
 
                 } catch (e: Exception) {
-                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG)
-                        .show()
+                    Snackbar.make(requireView(), e.message.toString(), Snackbar.LENGTH_LONG).show()
                 }
                 true
             }

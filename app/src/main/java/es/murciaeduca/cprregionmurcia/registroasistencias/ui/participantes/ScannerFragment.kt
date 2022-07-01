@@ -10,20 +10,44 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.budiyev.android.codescanner.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.BarcodeFormat
 import es.murciaeduca.cprregionmurcia.registroasistencias.R
 import es.murciaeduca.cprregionmurcia.registroasistencias.databinding.FragmentScannerBinding
+import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.AsistenciaViewModel
+import es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels.ParticipanteViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 
+enum class QrResultCodes {
+    ERROR, SUCCESS, WARNING
+}
+
 class ScannerFragment : Fragment() {
+
+    // Parámetros SafeArgs
+    private val args: ScannerFragmentArgs by navArgs()
+
+    // ViewModels
+    private val viewModel: AsistenciaViewModel by viewModels()
+    private val partViewModel: ParticipanteViewModel by viewModels()
+
+    // Flag permiso de cámara
     private var cameraAccess: Boolean = true
+
+    // Variables binding
     private var _binding: FragmentScannerBinding? = null
     private val binding get() = _binding!!
+
+    // Variables codescanner
     private lateinit var codeScanner: CodeScanner
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()
@@ -65,7 +89,7 @@ class ScannerFragment : Fragment() {
         menu.findItem(R.id.toolbarDropdown).isVisible = false
     }
 
-    // Gestioón del escáner QR. La cámara se activa con el evento click del botón
+    // Gestión del escáner QR. La cámara se activa con el evento click del botón
     // Este evalúa la variable cameraAccess y la activa o muestra la alerta al usuario
     private fun codeScanner() {
         val scannerView = binding.scannerView
@@ -82,26 +106,21 @@ class ScannerFragment : Fragment() {
 
             decodeCallback = DecodeCallback {
                 activity.runOnUiThread {
-                    val result = binding.scanResultText
+
                     try {
                         val obj = JSONObject(it.text)
-                        val participante: JSONObject = obj.getJSONObject("participante")
-                        val id = participante.getString("id")
-                        val actividad = participante.getString("actividad")
+                        val qrData: JSONObject = obj.getJSONObject("participante")
+                        val nif = qrData.getString("id")
+                        val actividad = qrData.getString("actividad")
 
-                        // Comprobar que existe el participante, la sesión está activa y no ha sido marcado
-                        //TODO
-
-                        result.text = id
+                        // Registrar al usuario
+                        registerAttendance(actividad, nif)
 
                     } catch (e: JSONException) {
-                        result.background = (ContextCompat.getDrawable(requireContext(),
-                            R.drawable.qr_callback_shape_error))
-                        result.text = R.string.qr_wrong_format.toString()
+                        showResult(getString(R.string.qr_wrong_format), QrResultCodes.ERROR)
                     }
-
-                    result.isVisible = true
                 }
+
             }
 
             errorCallback = ErrorCallback {
@@ -111,23 +130,99 @@ class ScannerFragment : Fragment() {
             }
 
             // Botón de acceso a la cámara
-            binding.scanTrigger.setOnClickListener {
-                binding.scanResultText.isVisible = false
-                if(cameraAccess) {
-                    codeScanner.startPreview()
-                }else{
-                    showPermissionAlert()
-                }
+            triggerListener()
+        }
+    }
+
+    /**
+     * Escucha del botón para habilitar el escaneo
+     */
+    fun triggerListener() {
+        binding.scanTrigger.setOnClickListener {
+            // Ocultar mensaje de resultado
+            binding.scanResultText.isVisible = false
+
+            if (cameraAccess) {
+
+                // Ocultar botón
+                binding.scanTrigger.visibility = View.INVISIBLE
+
+                // Habilitar cámara
+                codeScanner.startPreview()
+
+            } else {
+                showPermissionAlert()
             }
         }
     }
 
-    // Muestra un diálogo de alerta y vuelve al fragmento anterior
+    /**
+     * Consulta la validez de los datos del código QR y registra la asistencia en la base de datos
+     */
+    private fun registerAttendance(act_codigo: String, nif: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val p = partViewModel.getWithAsistencia(act_codigo, nif, args.sesionId)
+
+            // No existe el participante, no existe la sesión o no pertenece a la actividad
+            if (p == null) {
+                showResult(getString(R.string.qr_not_allowed), QrResultCodes.ERROR)
+
+                // Ya se ha registrado una asistencia anteriormente
+            } else if (p.asistencia != null) {
+                val msg = getString(R.string.qr_already_checked) + "\n${p.nombre} ${p.apellidos}"
+                showResult(msg, QrResultCodes.ERROR)
+
+            } else {
+                try {
+                    viewModel.saveFromQr(p, args.sesionId)
+
+                    val msg = getString(R.string.qr_checked) + "\n${p.nombre} ${p.apellidos}"
+                    showResult(msg, QrResultCodes.SUCCESS)
+
+                } catch (e: Exception) {
+                    showResult(getString(R.string.qr_not_allowed), QrResultCodes.ERROR)
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Muestra el resultado del escaneo con color en función del tipo
+     */
+    private fun showResult(msg: String, code: QrResultCodes) {
+        requireActivity().runOnUiThread {
+            val result = binding.scanResultText
+
+            // Código de error
+            result.background = when (code) {
+                QrResultCodes.ERROR -> ContextCompat.getDrawable(requireContext(),
+                    R.drawable.qr_callback_shape_error)
+                QrResultCodes.WARNING -> ContextCompat.getDrawable(requireContext(),
+                    R.drawable.qr_callback_shape_warning)
+                else -> ContextCompat.getDrawable(requireContext(),
+                    R.drawable.qr_callback_shape_success)
+            }
+
+            // Mostrar botón y mensaje
+            binding.scanTrigger.visibility = View.VISIBLE
+            result.text = msg
+            result.isVisible = true
+        }
+    }
+
+    /**
+     * Muestra la alerta de permiso de cámara y vuelve al fragmento anterior
+     */
     private fun showPermissionAlert() {
         MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.cpr_logo)
             .setTitle(R.string.permission_camera_title)
             .setMessage(R.string.permission_camera)
             .setPositiveButton(R.string.accept) { _, _ ->
+                findNavController().popBackStack()
+            }
+            .setOnDismissListener {
                 findNavController().popBackStack()
             }.show()
     }
