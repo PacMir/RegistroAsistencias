@@ -70,6 +70,11 @@ class SesionAdapter(
             if (mode == 1) {
                 binding.iconCloudDone.visibility = View.INVISIBLE
                 binding.iconCloudOff.visibility = View.INVISIBLE
+                if(s.activa){
+                    binding.iconActiva.visibility = View.VISIBLE
+                }else{
+                    binding.iconActiva.visibility = View.INVISIBLE
+                }
 
             } else {
 

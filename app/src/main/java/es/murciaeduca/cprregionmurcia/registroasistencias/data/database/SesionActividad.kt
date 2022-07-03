@@ -16,6 +16,7 @@ data class SesionActividad(
     val responsable: String,
     val inicio: Date,
     val fin: Date,
+    val activa: Boolean,
     val num_participantes: Int,
     val num_asisten: Int,
     val upload: Date?

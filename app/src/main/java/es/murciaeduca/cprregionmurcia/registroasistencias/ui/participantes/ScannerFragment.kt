@@ -144,8 +144,8 @@ class ScannerFragment : Fragment() {
 
             if (cameraAccess) {
 
-                // Ocultar botón
-                binding.scanTrigger.visibility = View.INVISIBLE
+                // Ocultar botón e info
+                hideTriggerInfo()
 
                 // Habilitar cámara
                 codeScanner.startPreview()
@@ -205,10 +205,24 @@ class ScannerFragment : Fragment() {
             }
 
             // Mostrar botón y mensaje
-            binding.scanTrigger.visibility = View.VISIBLE
+            showTriggerInfo()
+
             result.text = msg
             result.isVisible = true
         }
+    }
+
+    /**
+     * Funciones para mostrar/ocultar botón e info
+     */
+    private fun showTriggerInfo(){
+        binding.scanTrigger.visibility = View.VISIBLE
+        binding.scanInfo.visibility = View.VISIBLE
+    }
+
+    private fun hideTriggerInfo(){
+        binding.scanTrigger.visibility = View.INVISIBLE
+        binding.scanInfo.visibility = View.INVISIBLE
     }
 
     /**

@@ -79,18 +79,11 @@ class AsistenciaPastFragment : Fragment() {
      * Muestra el diálogo con la asistencia del participante
      */
     private fun showAttendanceDialog(p: ParticipanteAsistencia) {
-        var dialogText: String
-        if (p.asistencia == null) {
-            dialogText = getString(R.string.attendance_not_set)
-        } else {
-            dialogText = getString(R.string.attendance_set) + AppDateUtil.dateToString(p.asistencia,
+        val dialogText = if (p.asistencia == null)
+            getString(R.string.attendance_not_set)
+        else
+            getString(R.string.attendance_set) + AppDateUtil.dateToString(p.asistencia,
                 DateFormats.TIME.format) + "h."
-            dialogText += if (p.tipo_registro == 1) {
-                getString(R.string.attendance_qr_method)
-
-            } else
-                getString(R.string.attendance_manual_method)
-        }
 
         MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.cpr_logo)
@@ -98,7 +91,6 @@ class AsistenciaPastFragment : Fragment() {
             .setMessage(dialogText)
             .show()
     }
-
 
     /**
      * Muestra la información de la sesión

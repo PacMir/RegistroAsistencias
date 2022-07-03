@@ -17,6 +17,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/iconActiva"
+        style="@style/card_icons.icon_info"
+        android:visibility="invisible"
+        app:drawableStartCompat="@drawable/ic_manual"
+        android:text="@string/attendance_enabled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fecha_titulo" />
+
+    <TextView
         android:id="@+id/iconCloudDone"
         style="@style/card_icons.icon_info"
         android:visibility="invisible"

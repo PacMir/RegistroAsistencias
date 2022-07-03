@@ -57,21 +57,4 @@ object AppDateUtil {
 
         return output
     }
-
-    /**
-     * Obtiene milisegundos de la fecha actual
-     * Si se proporciona días, se suman a esta
-     */
-    fun getLongFromToday(day: Int?): Long {
-        var millis = System.currentTimeMillis()
-        if (day != null) {
-            millis += (86400000 * day)
-        }
-
-        val locale = Locale("ES", "es")
-        val currentDay = dateToString(Date(millis), DateFormats.DATE.format)
-        val parseDate =
-            currentDay?.let { SimpleDateFormat(DateFormats.DATE.format, locale).parse(it) }
-        return parseDate!!.time
-    }
 }
