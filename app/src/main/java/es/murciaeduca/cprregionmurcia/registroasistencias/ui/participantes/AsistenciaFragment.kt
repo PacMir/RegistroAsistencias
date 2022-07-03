@@ -94,7 +94,7 @@ class AsistenciaFragment : Fragment() {
                 .setPositiveButton(R.string.attendance_set_button) { _, _ ->
                     asisViewModel.save(args.sesion.id, p.id)
                 }
-                .setNegativeButton(R.string.cancel) { _, _ -> }
+                .setNegativeButton(R.string.cancel, null)
                 .show()
 
             // Se ha marcado asistencia
@@ -107,7 +107,7 @@ class AsistenciaFragment : Fragment() {
                 .setPositiveButton(R.string.attendance_cancel_button) { _, _ ->
                     asisViewModel.deleteById(args.sesion.id, p.id)
                 }
-                .setNegativeButton(R.string.cancel) { _, _ -> }
+                .setNegativeButton(R.string.cancel, null)
                 .show()
         }
     }

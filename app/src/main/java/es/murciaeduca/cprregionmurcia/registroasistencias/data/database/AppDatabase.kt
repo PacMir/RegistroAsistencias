@@ -31,7 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
 
             // Eliminar base de datos
-            context.deleteDatabase(DATABASE_NAME)
+            //context.deleteDatabase(DATABASE_NAME)
 
             // Crear instancia database si no es null
             return INSTANCE ?: synchronized(this) {
@@ -43,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
                     // Prepropagar con Base de datos
                     .createFromAsset("database/$DATABASE_NAME.db")
                     // No migraciones
-                    .fallbackToDestructiveMigration()
+                    //.fallbackToDestructiveMigration()
                     // Prepropagar modalidades
                     // .addCallback(ModalidadesPopulator())
                     .build()

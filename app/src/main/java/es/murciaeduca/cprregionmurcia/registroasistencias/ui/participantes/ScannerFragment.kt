@@ -233,9 +233,7 @@ class ScannerFragment : Fragment() {
             .setIcon(R.drawable.cpr_logo)
             .setTitle(R.string.permission_camera_title)
             .setMessage(R.string.permission_camera)
-            .setPositiveButton(R.string.accept) { _, _ ->
-                findNavController().popBackStack()
-            }
+            .setPositiveButton(R.string.accept, null)
             .setOnDismissListener {
                 findNavController().popBackStack()
             }.show()

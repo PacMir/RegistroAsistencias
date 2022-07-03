@@ -3,11 +3,9 @@ package es.murciaeduca.cprregionmurcia.registroasistencias.viewmodels
 import androidx.lifecycle.ViewModel
 import es.murciaeduca.cprregionmurcia.registroasistencias.application.App
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.repo.ParticipanteRepository
-import java.util.*
 
 class ParticipanteViewModel : ViewModel() {
     private val repository = ParticipanteRepository(App.getInstance().participanteDao())
-    private val todayDate = Date(System.currentTimeMillis())
 
     /**
      * Listado de Participantes de una actividad indicando asistencia
@@ -18,5 +16,5 @@ class ParticipanteViewModel : ViewModel() {
     /**
      *  Comprueba un participante
      */
-    fun getWithAsistencia(act_codigo: String, part_nif: String, sesion_id: Long) = repository.getWithAsistencia(act_codigo, part_nif, sesion_id, todayDate)
+    fun getWithAsistencia(act_codigo: String, part_nif: String, sesion_id: Long) = repository.getWithAsistencia(act_codigo, part_nif, sesion_id)
 }

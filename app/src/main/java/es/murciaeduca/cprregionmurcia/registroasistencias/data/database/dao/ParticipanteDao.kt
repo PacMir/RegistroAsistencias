@@ -4,7 +4,6 @@ import androidx.room.*
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.ParticipanteAsistencia
 import es.murciaeduca.cprregionmurcia.registroasistencias.data.database.entities.Participante
 import kotlinx.coroutines.flow.Flow
-import java.util.*
 
 @Dao
 interface ParticipanteDao {
@@ -44,6 +43,6 @@ interface ParticipanteDao {
             "FROM participantes p " +
             "INNER JOIN sesiones s ON s.act_codigo = p.act_codigo AND s.ses_id = :ses_id " +
             "LEFT JOIN asistencias t ON p.part_id = t.part_id AND t.ses_id = s.ses_id " +
-            "WHERE p.act_codigo = :act_codigo AND p.part_nif = :part_nif AND s.ses_fin > :now")
-    fun getWithAsistencia(act_codigo: String, part_nif: String, ses_id: Long, now: Date) : ParticipanteAsistencia
+            "WHERE p.act_codigo = :act_codigo AND p.part_nif = :part_nif AND s.ses_fin > strftime('%s', 'now') * 1000")
+    fun getWithAsistencia(act_codigo: String, part_nif: String, ses_id: Long) : ParticipanteAsistencia
 }

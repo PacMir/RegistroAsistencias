@@ -19,9 +19,6 @@ interface AsistenciaDao {
     @Query("DELETE FROM asistencias WHERE ses_id = :sesion_id AND part_id = :part_id")
     suspend fun deleteById(sesion_id: Long, part_id: Long)
 
-    @Query("SELECT COUNT(*) FROM asistencias a INNER JOIN participantes p ON a.part_id = p.part_id WHERE p.part_nif = :part_nif AND ses_id = :sesion_id AND marca_temporal IS NOT NULL")
-    suspend fun checkAsistencia(part_nif: String, sesion_id: Long) : Int
-
     @Query("SELECT COUNT(*) FROM asistencias WHERE ses_id = :sesion_id")
     fun getAsisten(sesion_id: Long) : LiveData<Int>
 

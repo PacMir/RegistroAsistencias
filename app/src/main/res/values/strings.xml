@@ -55,7 +55,7 @@
     <string name="permission_camera_title">Acceso a la cámara</string>
     <string name="qr_info">Pulse el botón para escanear un código QR</string>
     <string name="qr_wrong_format">Formato no válido</string>
-    <string name="qr_already_checked">Ya existe una asistencia del/la usuario/a</string>
+    <string name="qr_already_checked">Ya existe una asistencia del/la participante</string>
     <string name="qr_checked">Asistencia registrada</string>
     <string name="qr_not_allowed">No es posible registrar la asistencia</string>
 
